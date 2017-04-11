@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>Cesarmando's</title>
+    <script type="application/javascript"
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>¡Tu tienda online!</h1>
+<p>
+    Encuentra los mejores productos con excelentes precios aqui. ¡Envío a casa incluido!
+</p>
+<ul>
+    <li>
+        Este sitio es genial
+    </li>
+    <li>
+        Este sitio está en construcción.
+    </li>
+</ul>
+
+<p id="pasync">Ajax: ...cargando</p>
+<script type="application/javascript">
+    $.ajax({
+        url: "/slow/3",
+        context: document.body,
+        success: function(data){
+            $("#pasync").html("Ajax: " + data);
+        }
+    });
+</script>
+</body>
+</html>
