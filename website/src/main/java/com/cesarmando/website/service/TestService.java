@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class TestService {
 
     @SneakyThrows
-    public MyAjaxResponse slow(int seconds){
+    public MyAjaxResponse slow(int seconds) {
         MyAjaxResponse ar = new MyAjaxResponse();
         if(seconds < 0 || seconds > 20)
             return ar.setErrorMsg("Error, parametro segundos, [0;20], demasiado grande.");

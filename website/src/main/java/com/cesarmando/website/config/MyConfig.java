@@ -16,6 +16,10 @@ public class MyConfig {
     @Getter
     private org.springframework.core.env.Environment springEnv;
 
+    public String getProfilesString(){
+        return Arrays.deepToString(getSpringEnv().getActiveProfiles());
+    }
+
     public String getEnv(String key){
         return System.getenv(key);
     }

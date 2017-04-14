@@ -30,13 +30,13 @@ public class HomeController {
     public MyAjaxResponse login(@RequestParam String username, @RequestParam String password,
                         @RequestParam(required = false) boolean sys,
                         HttpSession session) throws Throwable {
-        MyAjaxResponse ar = securityService.login(username,password,sys,session);
+        MyAjaxResponse ar = securityService.login(username, password, sys, session);
         return ar;
     }
 
     @GetMappingJson(value = "/profiles")
     public MyAjaxResponse profiles(HttpServletResponse res) throws Throwable {
-        String profiles = Arrays.deepToString(myConfig.getSpringEnv().getActiveProfiles());
+        String profiles = myConfig.getProfilesString();
         log.warn("Active profiles: {}", profiles);
         if(myConfig.isProduction())
             res.sendRedirect("/");
