@@ -46,6 +46,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency><!-- DEVELOP TODO CONDITIONAL -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>

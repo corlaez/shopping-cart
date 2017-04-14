@@ -3,6 +3,8 @@ package com.cesarmando.website.service;
 import com.cesarmando.website.dao.UserDao;
 import com.cesarmando.website.dao.model.UserE;
 import com.cesarmando.website.viewmodel.MyAjaxResponse;
+import lombok.Getter;
+import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpSession;
 public class SecurityService {
 
     @Autowired
+    @Getter
     UserDao userDao;
 
     public MyAjaxResponse login(String username, String password, boolean sys, HttpSession session){

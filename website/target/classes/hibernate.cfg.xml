@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/carrito</property>
+        <!--<property name="connection.driver_class">org.h2.Driver</property>-->
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <mapping class="com.cesarmando.website.dao.model.AddressE"/>
+        <mapping class="com.cesarmando.website.dao.model.CardInfoE"/>
+        <mapping class="com.cesarmando.website.dao.model.ConfigE"/>
+        <mapping class="com.cesarmando.website.dao.model.OrderE"/>
+        <mapping class="com.cesarmando.website.dao.model.OrderAddressE"/>
+        <mapping class="com.cesarmando.website.dao.model.OrderDetailE"/>
+        <mapping class="com.cesarmando.website.dao.model.PaymentE"/>
+        <mapping class="com.cesarmando.website.dao.model.PaymentTypeE"/>
+        <mapping class="com.cesarmando.website.dao.model.PersonE"/>
+        <mapping class="com.cesarmando.website.dao.model.ProductE"/>
+        <mapping class="com.cesarmando.website.dao.model.ProductTypeE"/>
+        <mapping class="com.cesarmando.website.dao.model.UserE"/>
+        <!-- <property name="connection.username"/> -->
+        <!-- <property name="connection.password"/> -->
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>

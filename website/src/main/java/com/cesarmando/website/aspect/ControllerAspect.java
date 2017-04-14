@@ -3,6 +3,7 @@ package com.cesarmando.website.aspect;
 import com.cesarmando.website.viewmodel.MyAjaxResponse;
 import com.google.gson.Gson;
 import lombok.experimental.var;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by jarma on 4/11/2017.
  */
+@Slf4j
 @Aspect
 @Component
 public class ControllerAspect {
@@ -52,11 +54,14 @@ public class ControllerAspect {
             //todo meter
             retVal = pjp.proceed();
             return retVal;
+            //return gson.toJson(retVal);
         }
         catch(Throwable th) {//todo imnplement other catchs.
             var ar = MyAjaxResponse.errorMsg("Lo sentimos hubo un error.");
             th.printStackTrace();
-            return gson.toJson(ar);
+            log.warn("the error " + th.getMessage() + "is now overrided by a json with a default error message.");
+            return ar;
+//            return gson.toJson(ar);
         }
     }
 
