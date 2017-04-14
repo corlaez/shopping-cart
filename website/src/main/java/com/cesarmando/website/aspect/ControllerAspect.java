@@ -61,7 +61,7 @@ public class ControllerAspect {
             //todo meter
             log.warn("SI HAY ASPECTOS");
             retVal = pjp.proceed();
-            return gson.toJson(retVal);
+            return retVal;
         }
         catch(Throwable th) {//todo imnplement other catchs.
             var ar = MyAjaxResponse.errorMsg("Lo sentimos hubo un error.");

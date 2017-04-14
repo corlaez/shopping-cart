@@ -26,8 +26,8 @@
     $.ajax({
         url: "/slow/3",
         context: document.body,
-        success: function(data){
-            $("#pasync").html("Ajax: " + data);
+        success: function(ar){
+            $("#pasync").html("Ajax: " + ar.data);
         }
     });
 </script>

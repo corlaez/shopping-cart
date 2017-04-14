@@ -27,7 +27,7 @@ import java.text.DateFormat;
 public class RetrofitConfig {
 
     @Bean
-    public Retrofit retrofit() {
+    public Retrofit retrofitGithub() {
         return new Retrofit.Builder()
                 .baseUrl("https://api.github.com/")
                 .addConverterFactory(GsonConverterFactory.create(gson()))
@@ -47,6 +47,6 @@ public class RetrofitConfig {
 
     @Bean
     public GitHubService gitHubService(){
-        return retrofit().create(GitHubService.class);
+        return retrofitGithub().create(GitHubService.class);
     }
 }

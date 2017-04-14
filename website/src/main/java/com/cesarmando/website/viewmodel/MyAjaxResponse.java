@@ -24,8 +24,10 @@ public class MyAjaxResponse {
     private String successMsg;
     /** Message to display in an confirm (Yes/No) popup*/
     private String confirmMsg;
-    /** Data sent to be evaluated by the client*/
+    /** Json data sent to be evaluated by the client*/
     private String data;
+    /** A flag sent to be evaluated by the client*/
+    private String flag;
 
     public MyAjaxResponse(String data){
         this.data = data;
@@ -36,19 +38,30 @@ public class MyAjaxResponse {
     }
 
     public static MyAjaxResponse successMsg(String s){
-        return new MyAjaxResponse().setErrorMsg(s);
+        return new MyAjaxResponse().setSuccessMsg(s);
     }
 
     public static MyAjaxResponse infoMsg(String i){
-        return new MyAjaxResponse().setErrorMsg(i);
+        return new MyAjaxResponse().setInfoMsg(i);
     }
 
     public static MyAjaxResponse confirmMsg(String c){
-        return new MyAjaxResponse().setErrorMsg(c);
+        return new MyAjaxResponse().setConfirmMsg(c);
     }
 
     public static MyAjaxResponse data(String data){
-        return new MyAjaxResponse().setErrorMsg(data);
+        return new MyAjaxResponse(data);
+    }
+
+    @Override
+    public String toString() {
+        return "MyAjaxResponse{" +
+                "errorMsg='" + errorMsg + '\'' +
+                ", infoMsg='" + infoMsg + '\'' +
+                ", successMsg='" + successMsg + '\'' +
+                ", confirmMsg='" + confirmMsg + '\'' +
+                ", data='" + data + '\'' +
+                '}';
     }
 
 }
