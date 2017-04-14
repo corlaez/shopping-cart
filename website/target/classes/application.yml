@@ -1,7 +1,10 @@
 logging:
   level:
-    org.springframework.web: INFO
+    org.springframework.web: WARN
     com.cesarmando.website: DEBUG
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} \n\t %msg%n"
+server:
+  error:
+    path: /asuiasdfgasdgadsdgf5ag5asdgsa645gas4dgs6dg4s5dg5fg114f2gdf5g4dfg2dfg12dfg4d5fg5dfg41214g2
 #    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

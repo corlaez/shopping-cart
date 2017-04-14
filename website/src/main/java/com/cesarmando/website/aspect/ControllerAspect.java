@@ -23,6 +23,10 @@ public class ControllerAspect {
     Gson gson;
 
     //Pointcut: los puntos de corte definen el momento en el q se ejecurá una acción definida como Advice
+    @Pointcut("execution(public com.cesarmando.website.viewmodel.MyAjaxResponse *(..))")
+    private void ajaxResponseMethod() {}
+
+    //Pointcut: los puntos de corte definen el momento en el q se ejecurá una acción definida como Advice
     @Pointcut("execution(String *(..))")
     private void stringMethod() {}
 
@@ -44,24 +48,25 @@ public class ControllerAspect {
     @Pointcut("openStrings() && allControllers()")
     private void pcAroundAnyControllerOpenString() {}
 
+    @Pointcut("ajaxResponseMethod() && allControllers()")
+    private void pcAroundAnyControllerPublicAjaxResponse() {}
+
     //Advice: este advice se ejecuta alrededor de cualquier metodo string con acceso default o public q sea controller
     /** Advice for metrics and error handling */
-    @Around("pcAroundAnyControllerOpenString()")
+    @Around("pcAroundAnyControllerPublicAjaxResponse()")
     public Object doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable {
         // start stopwatch
         Object retVal = null;
         try {
             //todo meter
             retVal = pjp.proceed();
-            return retVal;
-            //return gson.toJson(retVal);
+            return gson.toJson(retVal);
         }
         catch(Throwable th) {//todo imnplement other catchs.
             var ar = MyAjaxResponse.errorMsg("Lo sentimos hubo un error.");
-            th.printStackTrace();
+            log.warn(gson.toJson(th));
             log.warn("the error " + th.getMessage() + "is now overrided by a json with a default error message.");
             return ar;
-//            return gson.toJson(ar);
         }
     }
 

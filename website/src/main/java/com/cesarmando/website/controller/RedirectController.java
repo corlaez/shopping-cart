@@ -1,7 +1,6 @@
 package com.cesarmando.website.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
-public class RedirectController implements ErrorController {
+public class RedirectController {
 
     @GetMapping(value = "/")
     public String home() {
@@ -23,8 +22,4 @@ public class RedirectController implements ErrorController {
         return "redirect:/oops.html";
     }
 
-    @Override
-    public String getErrorPath() {
-        return "/error";
-    }
 }

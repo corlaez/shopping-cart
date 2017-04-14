@@ -8,6 +8,7 @@ import com.cesarmando.website.service.SecurityService;
 import com.cesarmando.website.service.TestService;
 import com.cesarmando.website.viewmodel.MyAjaxResponse;
 import com.google.gson.Gson;
+import lombok.experimental.var;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -34,30 +35,29 @@ public class TestController {
     TestService testService;
     @Autowired
     GitHubService gitHubService;
-    @Autowired
-    Gson gson;
 
     @GetMappingJson("/slow/{seconds}")
-    public String slow(@PathVariable(name = "seconds") Integer seconds) throws Throwable {
-        MyAjaxResponse ar = testService.slow(seconds);
-        return gson.toJson(ar);
+    public MyAjaxResponse slow(@PathVariable(name = "seconds") Integer seconds) throws Throwable {
+        var ar = testService.slow(seconds);
+        return ar;
     }
 
     @GetMappingJson(value = "/userCount")
-    public String userCount() throws Throwable {
-        return gson.toJson(MyAjaxResponse.data("users count: " + securityService.getUserDao().count()));
+    public MyAjaxResponse userCount() throws Throwable {
+        long userCount = securityService.getUserDao().count();
+        return MyAjaxResponse.data("users count: " + userCount);
     }
 
     @GetMappingJson(value = "/octo-repos")
-    public String consumeApi() throws Throwable {
+    public MyAjaxResponse consumeApi() throws Throwable {
         List<Repo> repos = gitHubService.listRepos("octocat").execute().body();
         System.out.println(repos.toString());
         MyAjaxResponse ar = new MyAjaxResponse(repos.toString());
-        return gson.toJson(ar);
+        return ar;
     }
 
     @GetMappingJson(value = "/testAOP")
-    public String testAOP() throws Throwable {
+    public MyAjaxResponse testAOP() throws Throwable {
         throw new Exception("Este es un error simulado para ver AOP en accion");
     }
 

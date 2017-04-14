@@ -38,8 +38,7 @@ public class RetrofitConfig {
     public Gson gson() {
         return new GsonBuilder()
                 //.registerTypeAdapter(Id.class, new IdTypeAdapter())
-                .enableComplexMapKeySerialization()
-                //.serializeNulls()
+                //.enableComplexMapKeySerialization()
                 .setDateFormat(DateFormat.LONG)
                 .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
                 .setVersion(1.0)
