@@ -59,12 +59,13 @@ public class ControllerAspect {
         Object retVal = null;
         try {
             //todo meter
+            log.warn("SI HAY ASPECTOS");
             retVal = pjp.proceed();
             return gson.toJson(retVal);
         }
         catch(Throwable th) {//todo imnplement other catchs.
             var ar = MyAjaxResponse.errorMsg("Lo sentimos hubo un error.");
-            log.warn(gson.toJson(th));
+            th.printStackTrace();
             log.warn("the error " + th.getMessage() + "is now overrided by a json with a default error message.");
             return ar;
         }
