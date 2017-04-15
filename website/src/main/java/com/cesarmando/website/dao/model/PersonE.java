@@ -1,5 +1,6 @@
 package com.cesarmando.website.dao.model;
 
+import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 /**
  * Created by jarma on 4/11/2017.
  */
+@ToString
 @Entity
 @Table(name = "person", schema = "public")
 public class PersonE {
