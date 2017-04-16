@@ -8,9 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Created by cvalverd on 15/04/2017.
@@ -27,7 +25,7 @@ public class SecurityServiceTest {
         //assert correct type/impl
         assertThat(securityService, instanceOf(SecurityService.class));
         //assert true
-        assertThat(securityService.getUserDao(), is(""));
+        assertThat(securityService.getUserDao(), notNullValue());
     }
 
 }
