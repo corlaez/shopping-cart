@@ -98,5 +98,11 @@
             <version>4.12</version>
         </dependency>
 
+        <dependency><!-- HTML5 Server Templating -->
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring3</artifactId>
+            <version>3.0.5.RELEASE</version>
+        </dependency>
+
     </dependencies>
 </project>
