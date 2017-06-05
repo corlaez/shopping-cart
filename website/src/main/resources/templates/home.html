@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<link>
+<meta charset="UTF-8"/>
+<meta name="robots" content="noindex">
+<title>Title</title>
+<link rel="shortcut icon" type="image/x-icon"
+      href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico">
+<link rel="mask-icon" type=""
+      href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg"
+      color="#111">
+<link rel="canonical" href="https://codepen.io/dcergo/pen/RawpJL">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link rel="stylesheet prefetch"
+      href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css?ver=4.4.2">
+<link rel="stylesheet prefetch" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/ladda.min.css">
+<link rel="stylesheet" href="css/store.css"/>
+</head>
+<body>
+<!--/*@thymesVar id="var" type="java.lang.String"*/-->
+<div class="row">
+    <!--carrito de compras-->
+    <a class="cart-icon">
+        <span id="totalItems">0</span>
+        <ul class="cart"></ul>
+    </a>
+    <!--lista de productos-->
+    <div class="productosWrapper large-12 columns">
+        <div class="coin-wrapper">
+            <img src="http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg" alt="Libertad 5oz">
+            <span class="large-12 columns product-details">
+                <h3>Libertad 5oz <span class="price">$ 100 USD</span></h3>
+                <h3>Tenemos: <span class="stock">4</span></h3>
+            </span>
+            <a class="large-12 columns btn submit ladda-button prod-0"
+               data-style="slide-right" onclick="app.addtoCart(0);">
+                Añadir a la canasta
+            </a>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+</div>
+
+<script src="//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js?ver=1.11.2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/spin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/ladda.min.js"></script>
+<script type="text/javascript" src="js/store.js"></script>
+</body>
+</html>
