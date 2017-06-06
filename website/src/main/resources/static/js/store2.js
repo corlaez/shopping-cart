@@ -1,3 +1,6 @@
+/**
+ * Created by jarma on 6/6/2017.
+ */
 var app = window.app || {},
     business_paypal = ''; // aquí va tu correo electrónico de paypal
 
@@ -259,7 +262,7 @@ var app = window.app || {},
         app.init()
         app.getProducts()
         app.updatePayForm()
-        app.createProducts()
+        //app.createProducts()//loads products on local storage
     })
 
 })(jQuery)

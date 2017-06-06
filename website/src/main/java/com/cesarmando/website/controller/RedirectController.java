@@ -1,6 +1,8 @@
 package com.cesarmando.website.controller;
 
 import com.cesarmando.website.dao.ProductDao;
+import com.cesarmando.website.dao.model.ProductE;
+import com.google.gson.Gson;
 import lombok.experimental.var;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by jarma on 4/9/2017.
@@ -21,14 +24,21 @@ public class RedirectController {
 
     @Autowired
     ProductDao productDao;
+    @Autowired
+    Gson gson;
 
     @GetMapping(value = "/")
     //https://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html
     public String home(Model model, @RequestParam(name="type", required=false) Integer type) {
+        List<ProductE> products;
         if(type != null)
-            model.addAttribute("products", productDao.findByProductTypeId(type));
+            products = productDao.findByProductTypeId(type);
         else
-            model.addAttribute("products", productDao.findAll());
+            products = productDao.findAll();
+        String productsJSON = gson.toJson(products);
+        System.out.println(productsJSON);
+        model.addAttribute("products", products);
+        model.addAttribute("productsJSON", productsJSON);
         return "home";
     }
 
