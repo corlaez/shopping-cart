@@ -29,22 +29,6 @@ var app = window.app || {},
     app.createProducts = function(){
         var productos = [
                 {
-                    id : 0,
-                    img : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
-                    name : 'Libertad 5oz',
-                    price : 299.00,
-                    desc : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
-                    stock : 4
-                },
-                {
-                    id : 2,
-                    name : 'Libertad 5oz',
-                    img : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
-                    price : 199.00,
-                    desc : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
-                    stock : 2
-                },
-                {
                     id : 1,
                     img : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
                     name : 'Libertad 5oz',
@@ -62,6 +46,22 @@ var app = window.app || {},
                 },
                 {
                     id : 3,
+                    img : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
+                    name : 'Libertad 5oz',
+                    price : 299.00,
+                    desc : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
+                    stock : 4
+                },
+                {
+                    id : 4,
+                    name : 'Libertad 5oz',
+                    img : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
+                    price : 199.00,
+                    desc : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
+                    stock : 2
+                },
+                {
+                    id : 5,
                     name : 'Libertad 5oz',
                     img : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
                     price : 99.00,
@@ -69,7 +69,7 @@ var app = window.app || {},
                     stock : 1
                 },
                 {
-                    id : 4,
+                    id : 6,
                     name : 'Libertad 5oz',
                     img : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
                     price : 80.00,
@@ -84,7 +84,8 @@ var app = window.app || {},
 
             if(productos[i].stock > 0){
 
-                contenido+= '<div class="coin-wrapper">'
+                contenido+= '<li>'
+                contenido+= '   <div class="coin-wrapper">'
                 contenido+= '		<img src="'+productos[i].img+'" alt="'+productos[i].name+'">'
                 contenido+= '		<span class="large-12 columns product-details">'
                 contenido+= '			<h3>'+productos[i].name+' <span class="price">$ '+productos[i].price+' USD</span></h3>'
@@ -92,7 +93,8 @@ var app = window.app || {},
                 contenido+= '		</span>'
                 contenido+= '		<a class="large-12 columns btn submit ladda-button prod-'+productos[i].id+'" data-style="slide-right" onclick="app.addtoCart('+productos[i].id+');">Añadir a la canasta</a>'
                 contenido+= '		<div class="clearfix"></div>'
-                contenido+= '</div>'
+                contenido+= '   </div>'
+                contenido+= '</li>'
 
             }
 
@@ -260,7 +262,7 @@ var app = window.app || {},
         app.init()
         app.getProducts()
         app.updatePayForm()
-        app.createProducts()
+        //app.createProducts() TODO uncomment
     })
 
 })(jQuery)

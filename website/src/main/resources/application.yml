@@ -4,7 +4,30 @@ logging:
     com.cesarmando.website: DEBUG
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} \n\t %msg%n"
+    #console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 server:
   error:
     path: /error
-#    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+
+#
+# Development profile with templates and static resources reloading: http://blog.codeleak.pl/2016/12/thymeleaf-reload-templates-and-static-resources.html
+#
+
+# Path to project
+#project.base-dir: file:///C:/Projects/github/spring-boot-thymeleaf
+
+# Templates reloading during development
+spring.thymeleaf.check-template-location: true
+spring.thymeleaf.prefix: classpath:/templates/
+spring.thymeleaf.suffix: .html
+spring.thymeleaf.mode: LEGACYHTML5
+spring.thymeleaf.encoding: UTF-8
+spring.thymeleaf.content-type: text/html
+spring.thymeleaf.cache: false
+#spring.thymeleaf.prefix: classpath:/templates/
+#spring.thymeleaf.cache: false
+
+# Static resources reloading during development
+spring.resources.static-locations: classpath:/static/
+spring.resources.cache-period: 0
