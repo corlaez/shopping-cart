@@ -3,18 +3,14 @@ package com.cesarmando.website.controller;
 import com.cesarmando.website.config.GetMappingJson;
 import com.cesarmando.website.config.MyConfig;
 import com.cesarmando.website.config.PostMappingJson;
-import com.cesarmando.website.dao.ProductDao;
 import com.cesarmando.website.service.SecurityService;
 import com.cesarmando.website.viewmodel.MyAjaxResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import sun.applet.Main;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.PathParam;
 
 /**
  * Created by jarma on 4/9/2017.
