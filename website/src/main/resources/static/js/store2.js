@@ -2,8 +2,8 @@
  * Created by jarma on 6/6/2017.
  */
 var app = window.app || {},
-    business_paypal = 'armanpela@gmail.com'; // aquí va tu correo electrónico de paypal
-
+    business_paypal = 'armanpela@gmail.com', // aquí va tu correo electrónico de paypal
+    cartExpandNextState = false;
 (function($){
     'use strict';
 
@@ -106,6 +106,7 @@ var app = window.app || {},
     }
 
     app.addtoCart = function(id){
+        debugger;
         var l = Ladda.create( document.querySelector( '.prod-'+id ) );
 
         l.start();
@@ -258,6 +259,17 @@ var app = window.app || {},
         }
     }
 
+    app.expandCart = function(){
+        if(cartExpandNextState){
+            $('.cart').show();
+        }
+        else{
+            $('.cart').hide();
+        }
+        cartExpandNextState = !cartExpandNextState;
+        return false;
+    }
+
     $(document).ready(function(){
         app.init()
         app.getProducts()
@@ -266,3 +278,4 @@ var app = window.app || {},
     })
 
 })(jQuery)
+

@@ -23,7 +23,7 @@
 <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css?ver=4.4.2">
 <link rel="stylesheet prefetch" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/ladda.min.css">
-<link rel="stylesheet" href="/css/store.css"/>
+<link rel="stylesheet" href="/css/store2.css"/>
 <link rel="stylesheet" href="/css/core.css"/>
 
 <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
@@ -32,7 +32,7 @@
 <body>
 <!--/*@thymesVar id="var" type="java.lang.String"*/-->
 <div style="text-align: center;margin-top: 0px; margin-right: 0px; margin-bottom: 0px; padding: 5px; border: 0px; background: #1ebea5; overflow: hidden; position: fixed; z-index: 16000002; width: 190px; height: 30px; right: 10px; bottom: 0px;">
-    <a style="color: white;" href="https://api.whatsapp.com/send?phone=51980415200&text=Lamator,%20tengo%20una%20consulta">WhatsAppeanos!</a>
+    <a style="color: white;" target="_blank" href="https://api.whatsapp.com/send?phone=51980415200&text=Lamator,%20tengo%20una%20consulta">WhatsAppeanos!</a>
 </div>
 
 <div th:insert="fragments/header :: header"></div>
@@ -40,10 +40,11 @@
 <!--<div th:text="${products.size()}"></div>-->
 
 <div><!--carrito de compras-->
-    <a class="cart-icon">
-        <span id="totalItems">0</span>
+    <div class="cart-icon">
+        <div id="cartClickArea" onclick="app.expandCart();">A<br/>A</div>
+        <span id="totalItems" onclick="app.expandCart();">0</span>
         <ul class="cart"></ul>
-    </a>
+    </div>
     <!--lista de productos-->
     <ul  class="productosWrapper center small-block-grid-1 medium-block-grid-2 large-block-grid-3">
         <li th:each="product, iter : ${products}">
@@ -54,7 +55,7 @@
                     <!--<h3>Tenemos: <span class="stock">'+productos[i].stock+'</span></h3>-->
                 		</span>
                 <a th:class="'large-12 columns btn submit ladda-button prod-' + *{id}"
-                   data-style="slide-right" th:onclick="${'app.addtoCart('+ (iter.index + 1) +');'}">Añadir a la canasta</a>
+                   data-style="slide-right" th:onclick="${'app.addtoCart('+ product.id +');'}">Añadir a la canasta</a>
                 <div class="clearfix"></div>
             </div>
         </li>
