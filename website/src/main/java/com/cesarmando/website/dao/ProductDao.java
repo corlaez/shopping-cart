@@ -12,5 +12,6 @@ import java.util.List;
 @Repository
 public interface ProductDao extends JpaRepository<ProductE, Integer> {
     //https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
-    List<ProductE> findByProductTypeId(int productTypeId);
+    List<ProductE> findByProductTypeIdOrderById(int productTypeId);
+    List<ProductE> findAllByStockGreaterThanOrderById(int minumunStock);
 }

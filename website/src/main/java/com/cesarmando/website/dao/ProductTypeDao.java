@@ -11,6 +11,6 @@ import java.util.List;
  */
 @Repository
 public interface ProductTypeDao extends JpaRepository<ProductTypeE, Integer> {
-    List<ProductTypeE> findAllByOrderByIdAsc();
+    List<ProductTypeE> findAllByActiveTrueOrderByIdAsc();
     ProductTypeE findByNameIgnoreCase(String name);
 }

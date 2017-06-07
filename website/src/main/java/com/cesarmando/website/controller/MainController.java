@@ -27,6 +27,7 @@ public class MainController {
     public static final String ALL_PATH = "/Todo";
     public static final String ALL_PATH2 = "/todo";
     public static final String LAST_TYPE = "$LAST_TYPE$";
+    public static final String CART_NEXT_VISIBLE = "CART_NEXT_VISIBLE";
 
     @Autowired
     ProductDao productDao;
@@ -58,21 +59,26 @@ public class MainController {
         //products for templating
         List<ProductE> products;
         if(type != null) {
-            products = productDao.findByProductTypeId(type.getId());
+            products = productDao.findByProductTypeIdOrderById(type.getId());
         }
         else
-            products = productDao.findAll();
+            products = productDao.findAllByStockGreaterThanOrderById(0);
         model.addAttribute("products", products);
         //products for localStorage
         String productsJSON = gson.toJson(products);
         System.out.println(productsJSON);
         model.addAttribute("productsJSON", productsJSON);
         //types for menu, reverse order
-        var types = productTypeDao.findAllByOrderByIdAsc();
+        var types = productTypeDao.findAllByActiveTrueOrderByIdAsc();
         model.addAttribute("types", types);
         model.addAttribute("storePath", STORE_PATH);
         //session last type
         session.setAttribute(LAST_TYPE, typeName);
+        //session last type
+        Boolean cartNextVisible = (Boolean)session.getAttribute(CART_NEXT_VISIBLE);
+        if(cartNextVisible == null)
+            session.setAttribute(CART_NEXT_VISIBLE, false);
+        model.addAttribute("cartNextVisible", cartNextVisible);
         return "home";
     }
 
@@ -96,4 +102,8 @@ public class MainController {
         return "error";
     }
 
+    @ModelAttribute("homeServer")
+    public String homeServer() {
+        return "http://localhost:8080";
+    }
 }

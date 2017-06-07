@@ -27,7 +27,7 @@ public class MyAjaxResponse {
     /** Json data sent to be evaluated by the client*/
     private String data;
     /** A flag sent to be evaluated by the client*/
-    private String flag;
+    private String flag;//no recuerdo pa que es esto.
 
     public MyAjaxResponse(String data){
         this.data = data;

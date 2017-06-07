@@ -2,8 +2,8 @@
  * Created by jarma on 6/6/2017.
  */
 var app = window.app || {},
-    business_paypal = 'armanpela@gmail.com', // aquí va tu correo electrónico de paypal
-    cartExpandNextState = false;
+    business_paypal = 'armanpela@gmail.com';// aquí va tu correo electrónico de paypal
+
 (function($){
     'use strict';
 
@@ -180,15 +180,18 @@ var app = window.app || {},
                 total = total  + (n.cant * n.price)
                 items += '<li>'
                 items += '<img src="'+n.img+'" />'
-                items += '<h3 class="title">'+n.name+'<br><span class="price">'+n.cant+' x $ '+n.price+' USD</span> <button class="add" onclick="app.updateItem('+n.id+','+n.available+')"><i class="icon ion-minus-circled"></i></button> <button onclick="app.deleteProd('+n.id+')" ><i class="icon ion-close-circled"></i></button><div class="clearfix"></div></h3>'
+                // width:100px;overflow:hidden;height:50px;line-height:50px;
+                items += '<h3 class="title"><div style="width:200px;overflow:hidden;height: 19px">'+n.name+'</div><span class="price">'+n.cant+' x $ '+n.price+' USD</span> <button class="add" onclick="app.updateItem('+n.id+','+n.available+')"><i class="icon ion-minus-circled"></i></button> <button onclick="app.deleteProd('+n.id+')" ><i class="icon ion-close-circled"></i></button><div class="clearfix"></div></h3>'
                 items += '</li>'
             });
 
             //agregar el total al carrito
             items += '<li id="total">Total : $ '+total+' USD <div id="submitForm"></div></li>'
             wrapper.html(items)
-            $('.cart').css('left','-500%')
+            //$('.cart').css('left','-600%')
         }
+        if(cartNextVisible)
+            $('.cart').hide();
     }
 
     app.updateItem = function(id,available){
@@ -260,13 +263,14 @@ var app = window.app || {},
     }
 
     app.expandCart = function(){
-        if(cartExpandNextState){
+        if(cartNextVisible){
             $('.cart').show();
         }
         else{
             $('.cart').hide();
         }
-        cartExpandNextState = !cartExpandNextState;
+        cartNextVisible = !cartNextVisible;
+        getHome("/cartNextVisible/"+cartNextVisible);
         return false;
     }
 
@@ -276,6 +280,31 @@ var app = window.app || {},
         app.updatePayForm()
         //app.createProducts()//loads products on local storage
     })
-
 })(jQuery)
 
+
+function repos(imgs) {
+    imgs.each(function (i, o) {
+        var imgw = $(o).width()
+        var boxw = $(o).parent('div').width()
+        var imgh = $(o).height()
+        var boxh = $(o).parent('div').outerHeight()
+
+        if (imgw > boxw) {
+            $(o).css('left', ((imgw / 2) - (boxw / 2)) * -1)
+        } else {
+            $(o).css('left', 0)
+        }
+
+        if (imgh > boxh) {
+            $(o).css('top', ((imgh / 2) - (boxh / 2)) * -1)
+        } else {
+            $(o).css('top', 0)
+        }
+    })
+}
+$(window).resize(function () {
+    repos($('.field-content img'))
+})
+
+repos($('.field-content img'))

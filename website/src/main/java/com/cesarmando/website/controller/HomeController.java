@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sun.applet.Main;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -51,10 +52,15 @@ public class HomeController {
         return MyAjaxResponse.data(profiles);
     }
 
-    @GetMappingJson("/beforePay")
-    public MyAjaxResponse beforePay(@RequestBody Object cart, HttpSession session) throws Throwable {
+    @PostMappingJson("/beforePay")
+    public MyAjaxResponse beforePay(@RequestBody String cart, HttpSession session) throws Throwable {
         session.setAttribute("cart", cart);
         return MyAjaxResponse.data("");
     }
 
+    @GetMappingJson("/cartNextVisible/{nextVisible}")
+    public MyAjaxResponse toogleCart(HttpSession session, @PathVariable Boolean nextVisible) throws Throwable {
+        session.setAttribute(MainController.CART_NEXT_VISIBLE, nextVisible);
+        return MyAjaxResponse.data("" + nextVisible);
+    }
 }
