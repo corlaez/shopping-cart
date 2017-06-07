@@ -30,9 +30,15 @@ public class HomeController {
 
     @PostMappingJson("/login")
     public MyAjaxResponse login(@RequestParam String username, @RequestParam String password,
-                        @RequestParam(required = false) boolean sys,
-                        HttpSession session) throws Throwable {
+                                @RequestParam(required = false) boolean sys,
+                                HttpSession session) throws Throwable {
         MyAjaxResponse ar = securityService.login(username, password, sys, session);
+        return ar;
+    }
+
+    @GetMappingJson("/logoff")
+    public MyAjaxResponse logoff(HttpSession session) throws Throwable {
+        MyAjaxResponse ar = securityService.logoff(session);
         return ar;
     }
 
@@ -43,6 +49,12 @@ public class HomeController {
         if(myConfig.isProduction())
             res.sendRedirect("/");
         return MyAjaxResponse.data(profiles);
+    }
+
+    @GetMappingJson("/beforePay")
+    public MyAjaxResponse beforePay(@RequestBody Object cart, HttpSession session) throws Throwable {
+        session.setAttribute("cart", cart);
+        return MyAjaxResponse.data("");
     }
 
 }

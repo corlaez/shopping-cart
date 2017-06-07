@@ -54,7 +54,7 @@ public class ControllerAspect {
     //Advice: este advice se ejecuta alrededor de cualquier metodo string con acceso default o public q sea controller
     /** Advice for metrics and error handling */
     @Around("pcAroundAnyControllerPublicAjaxResponse()")
-    public Object doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable {
+    public Object doRestController(ProceedingJoinPoint pjp) throws Throwable {
         // start stopwatch
         Object retVal = null;
         try {
@@ -71,4 +71,22 @@ public class ControllerAspect {
         }
     }
 
+
+    @Around("withinController() && openStrings()")
+    public Object doController(ProceedingJoinPoint pjp) throws Throwable {
+        // start stopwatch
+        Object retVal = null;
+        try {
+            //todo meter
+            log.warn("SI HAY ASPECTOS");
+            retVal = pjp.proceed();
+            System.out.println("success: " + retVal);
+            return retVal;
+        }
+        catch(Throwable th) {//todo imnplement other catchs.
+            th.printStackTrace();
+            log.warn("the error " + th.getMessage() + "is now overrided by a oops with a default error message.");
+            return "redirect:/error";
+        }
+    }
 }

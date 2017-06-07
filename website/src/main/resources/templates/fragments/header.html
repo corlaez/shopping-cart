@@ -16,7 +16,7 @@
     <nav class="top-bar" data-topbar role="navigation">
         <ul class="title-area">
             <li class="name">
-                <h1><a href="#">Lamator</a></h1>
+                <h1><a th:href="@{/}">Lamator</a></h1>
             </li>
             <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
             <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
@@ -25,10 +25,17 @@
         <section class="top-bar-section">
             <!-- Right Nav Section -->
             <ul class="right">
-                <li class="active"><a href="#">Abrigos</a></li>
-                <li class="active"><a href="#">Gorros</a></li>
-                <li class="active"><a href="#">Mantas</a></li>
-                <li class="active"><a href="#">Otros</a></li>
+                <li class="active">
+                    <a href="/store/Todo">
+                        Todo
+                    </a>
+                </li>
+                <li class="active" th:each="type : ${types}">
+                    <a th:href="@{${storePath} + '/' + ${type.name}}" th:text="${type.name}">
+                        Abrigos
+                    </a>
+                </li>
+
                 <!--<li class="has-dropdown">-->
                 <!--<a href="#">Right Button Dropdown</a>-->
                 <!--<ul class="dropdown">-->
@@ -41,9 +48,10 @@
             <!-- Left Nav Section -->
             <ul class="left">
                 <li class="active"><a data-reveal-id="myModal" href="#">Nosotros</a></li>
+                <li class="active" th:if="${session.auth == null or !session.auth}"><a data-reveal-id="myModalRegister" href="#">Registro</a></li>
+                <li class="active" th:if="${session.auth == null or !session.auth}"><a data-reveal-id="myModalLogin" href="#">Login</a></li>
+                <li class="active" th:if="${session.auth}"><a data-reveal-id="myModalProfile" href="#" th:text="session.name">Perfil</a></li>
             </ul>
-
-
         </section>
     </nav>
 
@@ -52,11 +60,40 @@
         <h2 id="modalTitle">Lamator, una tienda peruana</h2>
         <p class="lead">Llama Alpaca Modern Artisans sTORe</p>
         <p>Ofrecemos los productos de artesanos peruanos seleccionados hechos con finos materiales
-         andinos de la más alta calidad.
+            andinos de la más alta calidad.
             <br/><br/>
-        Fernando Aragón, Cesar Valverde, Armando Córdova</p>
+            Fernando Aragón, Cesar Valverde, Armando Córdova</p>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+
+    <!--http://foundation.zurb.com/sites/docs/v/5.5.3/components/reveal.html-->
+    <div id="myModalProfile" class="reveal-modal" data-reveal aria-labelledby="modalTitleProfile" aria-hidden="true" role="dialog">
+        <h2 id="modalTitleProfile">Lamator, una tienda peruana</h2>
+        <p class="lead">Llama Alpaca Modern Artisans sTORe</p>
+        <p>Ofrecemos los productos de artesanos peruanos seleccionados hechos con finos materiales
+            andinos de la más alta calidad.
+            <br/><br/>
+            Fernando Aragón, Cesar Valverde, Armando Córdova</p>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+
+    <!--http://foundation.zurb.com/sites/docs/v/5.5.3/components/reveal.html-->
+    <div id="myModalLogin" class="reveal-modal" data-reveal aria-labelledby="modalTitleLogin" aria-hidden="true" role="dialog">
+        <h2 id="modalTitleLogin">Entra a Lamator</h2>
+        <p class="lead">Llama Alpaca Modern Artisans sTORe</p>
+        <p>Aqui va un form de Login</p>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+
+    <!--http://foundation.zurb.com/sites/docs/v/5.5.3/components/reveal.html-->
+    <div id="myModalRegister" class="reveal-modal" data-reveal aria-labelledby="modalTitleRegister" aria-hidden="true" role="dialog">
+        <h2 id="modalTitleRegister">Regístrate a Lamator</h2>
+        <p class="lead">Llama Alpaca Modern Artisans sTORe</p>
+        <p>Aqui va un form de registro</p>
         <a class="close-reveal-modal" aria-label="Close">&#215;</a>
     </div>
 </div>
 </body>
 </html>
+
+<!--<a href="javascript:void(0)" onclick="myJsFunc();">Run JavaScript Code</a>-->

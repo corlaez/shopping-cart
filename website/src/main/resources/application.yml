@@ -8,8 +8,7 @@ logging:
 server:
   error:
     path: /error
-
-
+server.error.whitelabel.enabled: false
 #
 # Development profile with templates and static resources reloading: http://blog.codeleak.pl/2016/12/thymeleaf-reload-templates-and-static-resources.html
 #

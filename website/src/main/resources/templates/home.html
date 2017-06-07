@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <link>
 <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
 <title>Title</title>
 <!--<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css"-->
@@ -22,14 +23,17 @@
 <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css?ver=4.4.2">
 <link rel="stylesheet prefetch" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/ladda.min.css">
-<link rel="stylesheet" href="css/store.css"/>
-<link rel="stylesheet" href="css/core.css"/>
+<link rel="stylesheet" href="/css/store.css"/>
+<link rel="stylesheet" href="/css/core.css"/>
 
 <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
         th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>
 </head>
 <body>
 <!--/*@thymesVar id="var" type="java.lang.String"*/-->
+<div style="text-align: center;margin-top: 0px; margin-right: 0px; margin-bottom: 0px; padding: 5px; border: 0px; background: #1ebea5; overflow: hidden; position: fixed; z-index: 16000002; width: 190px; height: 30px; right: 10px; bottom: 0px;">
+    <a style="color: white;" href="https://api.whatsapp.com/send?phone=51980415200&text=Lamator,%20tengo%20una%20consulta">WhatsAppeanos!</a>
+</div>
 
 <div th:insert="fragments/header :: header"></div>
 
@@ -41,15 +45,15 @@
         <ul class="cart"></ul>
     </a>
     <!--lista de productos-->
-    <ul th:each="product, iter : ${products}" class="productosWrapper center small-block-grid-1 medium-block-grid-2 large-block-grid-3">
-        <li>
-            <div class="coin-wrapper">
-                <img src="https://www.polyvore.com/cgi/img-thing?.out=jpg&size=l&tid=143732127" alt="Abrigo de llama">
+    <ul  class="productosWrapper center small-block-grid-1 medium-block-grid-2 large-block-grid-3">
+        <li th:each="product, iter : ${products}">
+            <div class="coin-wrapper" th:object="${product}">
+                <img th:src="*{image}" src="https://www.polyvore.com/cgi/img-thing?.out=jpg&size=l&tid=143732127" alt="Abrigo de llama">
                 <span class="large-12 columns product-details">
-                			<h3>Abrigo de llama <br/><br/>Precio: <span class="price">$ 100 USD</span></h3>
+                    <h3><div th:remove="tag" th:text="*{name + ' ' + id}">Abrigo de llama</div> <br/><br/>Precio: <span class="price" th:text="*{'$ ' + fPrice()+ ' USD'}">$ 100 USD</span></h3>
                     <!--<h3>Tenemos: <span class="stock">'+productos[i].stock+'</span></h3>-->
                 		</span>
-                <a th:class="'large-12 columns btn submit ladda-button prod-' + ${product.id}"
+                <a th:class="'large-12 columns btn submit ladda-button prod-' + *{id}"
                    data-style="slide-right" th:onclick="${'app.addtoCart('+ (iter.index + 1) +');'}">Añadir a la canasta</a>
                 <div class="clearfix"></div>
             </div>
@@ -66,11 +70,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/js/foundation.min.js?ver=4.4.2"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    localStorage.setItem('productos',JSON.parse(/*[[${productsJSON}]]*/));
+    var jsonProducts = /*[[${productsJSON}]]*/null;
+    console.log(jsonProducts);
+    localStorage.setItem('productos', jsonProducts);
     $(document).foundation();
     /*]]>*/
 </script>
-<script type="text/javascript" src="js/store2.js"></script>
+<script type="text/javascript" src="/js/store2.js"></script>
 </body>
 </html>
 

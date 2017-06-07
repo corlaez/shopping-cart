@@ -4,6 +4,8 @@ import com.cesarmando.website.dao.model.UserE;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
+
 /**
  * Created by jarma on 4/9/2017.
  */

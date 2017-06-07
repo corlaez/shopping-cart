@@ -1,13 +1,12 @@
 package com.cesarmando.website.dao.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
  * Created by jarma on 4/11/2017.
@@ -15,6 +14,8 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "product", schema = "public")
 public class ProductE {
+    static DecimalFormat df = new DecimalFormat("#,###.00");
+
     private Integer id;
     private String name;
     @SerializedName("desc")
@@ -116,5 +117,9 @@ public class ProductE {
         result = 31 * result + (active != null ? active.hashCode() : 0);
         result = 31 * result + (productTypeId != null ? productTypeId.hashCode() : 0);
         return result;
+    }
+
+    public String fPrice(){
+        return df.format(price);
     }
 }

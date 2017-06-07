@@ -2,7 +2,7 @@
  * Created by jarma on 6/6/2017.
  */
 var app = window.app || {},
-    business_paypal = ''; // aquí va tu correo electrónico de paypal
+    business_paypal = 'armanpela@gmail.com'; // aquí va tu correo electrónico de paypal
 
 (function($){
     'use strict';

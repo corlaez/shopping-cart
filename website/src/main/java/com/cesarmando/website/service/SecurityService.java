@@ -1,5 +1,6 @@
 package com.cesarmando.website.service;
 
+import com.cesarmando.website.dao.PersonDao;
 import com.cesarmando.website.dao.UserDao;
 import com.cesarmando.website.dao.model.UserE;
 import com.cesarmando.website.viewmodel.MyAjaxResponse;
@@ -20,6 +21,8 @@ public class SecurityService {
     @Autowired
     @Getter
     UserDao userDao;
+    @Getter
+    PersonDao personDao;
 
     public MyAjaxResponse login(String username, String password, boolean sys, HttpSession session){
         MyAjaxResponse ajaxResponse = new MyAjaxResponse();
@@ -27,11 +30,18 @@ public class SecurityService {
         log.info("username found: {}. request system access: {}", user != null, sys);
         if(user != null && password.equals(user.getPassword())){
             if(!sys || (sys && user.getSuperuser())) {
+                session.setAttribute("name", personDao.findOne(user.getPersonId()).getName());
                 session.setAttribute("logged", true);
                 return ajaxResponse;
             }
         }
         ajaxResponse.setErrorMsg("Combinación usuario y contraseña inválida.");
+        return ajaxResponse;
+    }
+
+    public MyAjaxResponse logoff(HttpSession session){
+        session.invalidate();
+        MyAjaxResponse ajaxResponse = new MyAjaxResponse();
         return ajaxResponse;
     }
 
