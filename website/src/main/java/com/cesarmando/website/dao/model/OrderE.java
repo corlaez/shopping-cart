@@ -1,7 +1,5 @@
 package com.cesarmando.website.dao.model;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 
 /**

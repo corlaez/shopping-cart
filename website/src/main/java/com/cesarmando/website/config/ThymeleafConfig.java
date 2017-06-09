@@ -24,11 +24,11 @@ public class ThymeleafConfig {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setPrefix("/templates/text/");
         templateResolver.setSuffix(".txt");
-        templateResolver.setTemplateMode(TemplateMode.TEXT /* https://github.com/thymeleaf/thymeleaf/issues/395 */);
+        // https://github.com/thymeleaf/thymeleaf/issues/395
+        templateResolver.setTemplateMode(TemplateMode.TEXT);
         templateResolver.setCharacterEncoding("UTF8");
         templateResolver.setCheckExistence(true);
         templateResolver.setCacheable(false);
         return templateResolver;
     }
-
 }
