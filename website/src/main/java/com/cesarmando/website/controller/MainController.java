@@ -48,6 +48,12 @@ public class MainController {
     //https://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html
     public String store(HttpSession session, Model model, Locale locale,
             @PathVariable(required=false) String typeName) {
+        //vm = service.getVMSTORE(session, typename);
+        //model.addAttribute("products", vm.products);
+        //model.addAttribute("asd", vm.asd);
+        //model.addAttribute("sdad", vm.sdad);
+        //model.addAttribute("asdas", vm.asdas);
+        //return "home";
         System.out.println(locale.getCountry());
         //todo make viewModel and encapsulate in service
         //get typeId
