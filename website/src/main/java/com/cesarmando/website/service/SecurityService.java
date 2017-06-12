@@ -32,6 +32,8 @@ public class SecurityService {
             if(!sys || (sys && user.getSuperuser())) {
                 session.setAttribute("name", personDao.findOne(user.getPersonId()).getName());
                 session.setAttribute("logged", true);
+                if(sys)
+                    session.setAttribute("admin", true);
                 return ajaxResponse;
             }
         }
@@ -45,4 +47,9 @@ public class SecurityService {
         return ajaxResponse;
     }
 
+    public boolean isAdmin(HttpSession session){
+        Boolean b = (Boolean)session.getAttribute("admin");
+        b = b == null ? false : b;
+        return b;
+    }
 }
