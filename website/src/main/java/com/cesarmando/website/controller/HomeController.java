@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by jarma on 4/9/2017.
  */
-
 @Slf4j
 @RestController
 public class HomeController {
