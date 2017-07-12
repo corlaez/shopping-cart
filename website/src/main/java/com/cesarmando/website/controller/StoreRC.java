@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 
 @Slf4j
 @RestController
-public class HomeController {
+public class StoreRC {
 
     @Autowired
     SecurityService securityService;
@@ -56,7 +56,7 @@ public class HomeController {
 
     @GetMappingJson("/cartNextVisible/{nextVisible}")
     public MyAjaxResponse toogleCart(HttpSession session, @PathVariable Boolean nextVisible) throws Throwable {
-        session.setAttribute(MainController.CART_NEXT_VISIBLE, nextVisible);
+        session.setAttribute(StoreC.CART_NEXT_VISIBLE, nextVisible);
         return MyAjaxResponse.data("" + nextVisible);
     }
 }

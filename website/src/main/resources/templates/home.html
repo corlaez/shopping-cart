@@ -129,6 +129,13 @@
     var cartNextVisible = /*[[${cartNextVisible}]]*/null;
     localStorage.setItem('productos', jsonProducts);
     $(document).foundation();
+    var admin = /*[[${admin}]]*/null;
+    if(admin){
+        $("#myModalLogin").foundation('reveal','open');
+        $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
+            window.location.href = "http://localhost:8080/";
+        });
+    }
     /*]]>*/
 </script>
 <script type="text/javascript" src="/js/store2.js"></script>
