@@ -1,5 +1,6 @@
 package com.cesarmando.website.viewmodel;
 
+import com.cesarmando.website.service.ConsService;
 import lombok.Getter;
 
 import lombok.NoArgsConstructor;
@@ -28,6 +29,12 @@ public class MyAjaxResponse {
     private String data;
     /** A flag sent to be evaluated by the client*/
     private String flag;//no recuerdo pa que es esto.
+    /** If present the Ajax response should redirect*/
+    private String redirect;
+
+    public String getRedirect() {
+        return ConsService.getRedirect() + redirect;
+    }
 
     public MyAjaxResponse(String data){
         this.data = data;

@@ -18,10 +18,9 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class SecurityService {
 
-    @Autowired
-    @Getter
+    @Autowired @Getter
     UserDao userDao;
-    @Getter
+    @Autowired
     PersonDao personDao;
 
     public MyAjaxResponse login(String username, String password, boolean sys, HttpSession session){
@@ -30,11 +29,14 @@ public class SecurityService {
         log.info("username found: {}. request system access: {}", user != null, sys);
         if(user != null && password.equals(user.getPassword())){
             if(!sys || (sys && user.getSuperuser())) {
+                System.out.println("super: " + user);
                 session.setAttribute("name", personDao.findOne(user.getPersonId()).getName());
                 session.setAttribute("logged", true);
+                ajaxResponse.setRedirect("/admin");
                 return ajaxResponse;
             }
         }
+        ajaxResponse.setRedirect("/");
         ajaxResponse.setErrorMsg("Combinación usuario y contraseña inválida.");
         return ajaxResponse;
     }

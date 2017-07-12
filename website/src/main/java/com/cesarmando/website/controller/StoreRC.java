@@ -3,6 +3,7 @@ package com.cesarmando.website.controller;
 import com.cesarmando.website.config.GetMappingJson;
 import com.cesarmando.website.config.MyConfig;
 import com.cesarmando.website.config.PostMappingJson;
+import com.cesarmando.website.service.ConsService;
 import com.cesarmando.website.service.SecurityService;
 import com.cesarmando.website.viewmodel.MyAjaxResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +57,7 @@ public class StoreRC {
 
     @GetMappingJson("/cartNextVisible/{nextVisible}")
     public MyAjaxResponse toogleCart(HttpSession session, @PathVariable Boolean nextVisible) throws Throwable {
-        session.setAttribute(StoreC.CART_NEXT_VISIBLE, nextVisible);
+        session.setAttribute(ConsService.cartNextVisibleKey, nextVisible);
         return MyAjaxResponse.data("" + nextVisible);
     }
 }
