@@ -190,7 +190,7 @@ var app = window.app || {},
             wrapper.html(items)
             //$('.cart').css('left','-600%')
         }
-        if(cartNextVisible)
+        if(cartNextVisible == true)
             $('.cart').hide();
     }
 

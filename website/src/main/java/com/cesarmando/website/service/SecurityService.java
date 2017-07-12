@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by jarma on 4/11/2017.
  */
-@Service
+@Service("sec")
 @Slf4j
 public class SecurityService {
 
@@ -29,9 +29,10 @@ public class SecurityService {
         log.info("username found: {}. request system access: {}", user != null, sys);
         if(user != null && password.equals(user.getPassword())){
             if(!sys || (sys && user.getSuperuser())) {
-                System.out.println("super: " + user);
-                session.setAttribute("name", personDao.findOne(user.getPersonId()).getName());
-                session.setAttribute("logged", true);
+                session.setAttribute("username", personDao.findOne(user.getPersonId()).getName());
+                session.setAttribute("user", user);
+                if(user.getSuperuser())
+                    session.setAttribute("admin", true);
                 ajaxResponse.setRedirect("/admin");
                 return ajaxResponse;
             }
@@ -47,4 +48,13 @@ public class SecurityService {
         return ajaxResponse;
     }
 
+    public boolean isAdmin(HttpSession session){
+        Boolean isAdmin = (Boolean) session.getAttribute("admin");
+        return isAdmin == null ? false : isAdmin;
+    }
+
+//    public UserE getUser(HttpSession session){
+//        UserE user = (UserE) session.getAttribute("user");
+//        return user;
+//    }
 }

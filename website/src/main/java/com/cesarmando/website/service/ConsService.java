@@ -20,6 +20,9 @@ public class ConsService {
     String all = "Todo";
     @Getter
     public static final
+    String perfil = "perfil";
+    @Getter
+    public static final
     String redirect = "redirect:";
 
     //paths
@@ -29,11 +32,23 @@ public class ConsService {
     @Getter
     public static final
     String storeAllP = storeP + "/" + all;
+    @Getter
+    public static final
+    String adminP = "/admin";
+    @Getter
+    public static final
+    String adminLoginP = adminP + "/login";
+    @Getter
+    public static final
+    String adminLogoffP = adminP + "/logoff";
 
     //redirects
     @Getter
     public static final
     String redirectStore = redirect + storeP;
+    @Getter
+    public static final
+    String redirectAdmin = redirect + adminP;
 
     //keys
     @Getter

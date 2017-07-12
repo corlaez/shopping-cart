@@ -19,6 +19,8 @@ public class UserE {
     private Boolean active;
     private Integer personId;
 
+    private String repeatPassword;
+
     @Id
     @Column(name = "id")
     public Integer getId() {

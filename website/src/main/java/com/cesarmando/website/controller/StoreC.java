@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
 /**
  * Created by jarma on 4/9/2017.
  */
@@ -47,13 +48,13 @@ public class StoreC {
 
     //https://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html
     @GetMapping({ConsService.storeP + "/{typeName}"})
-    //https://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html
-    public String store(HttpSession session, Model model,
-                        @PathVariable String typeName) {
-        //get products
+    public String store(
+            HttpSession session, Model model,
+            @PathVariable String typeName) {
         List<ProductE> products;
-
         if (typeName.equalsIgnoreCase("admin")) {
+            if (securityService.isAdmin(session))
+                return ConsService.redirectAdmin;
             model.addAttribute("admin", true);
         } else {
             if (typeName.equalsIgnoreCase(ConsService.all)) {
@@ -90,21 +91,6 @@ public class StoreC {
                 true,
                 session)
                 .getRedirect();
-    }
-
-    @GetMapping("/pay/success")
-    public String paySuccess(HttpSession session) {
-        var cart = session.getAttribute("cart");
-        System.out.println("CART SUCCESS" + cart);
-        //serviceX.processPayment(session, cart);
-        return ConsService.redirectStore;
-    }
-
-    @GetMapping("/pay/fail")
-    public String payFail(HttpSession session) {
-        System.out.println("CART FAIL");
-        session.setAttribute("cart", null);
-        return "redirect:/store";
     }
 
     @GetMapping(value = "/error")

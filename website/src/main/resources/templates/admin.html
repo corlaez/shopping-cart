@@ -36,7 +36,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/js/foundation.min.js?ver=4.4.2"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
+    //this could be a param WishList
     var homeServer = /*[[${@cons.homeServer}]]*/null;
+    //and this could be in a js file
     var getHome = function(path, data) {
         $.ajax(homeServer + path,{data: data})
             .done(function(msg) {
@@ -81,9 +83,13 @@
                 if(msg.successMsg != null){
                     //show message, continue
                 }
+                if(msg.successMsg != null){
+                    //show message, continue
+                }
                 console.log(msg.data);
             });
     }
+    var cartNextVisible = null;
     $(document).foundation();
     /*]]>*/
 </script>

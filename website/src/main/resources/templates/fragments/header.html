@@ -31,8 +31,16 @@
                     </a>
                 </li>
                 <li class="active" th:each="type : ${types}">
-                    <a th:href="@{${@cons.storeP + '/' + type.name}}" th:text="${type.name}">
+                    <a th:href="@{${@cons.storeP + '/' + type.name}}"
+                       th:text="${type.name}">
                         Abrigos
+                    </a>
+                </li>
+                <li class="active">
+                    <a th:if="${@sec.isAdmin(#httpSession)}"
+                       th:onclick="${'postHome(' + @cons.adminLogoffP + ')'}"
+                       href="javascript:void(0);">
+                        Logoff
                     </a>
                 </li>
 
@@ -47,10 +55,15 @@
 
             <!-- Left Nav Section -->
             <ul class="left">
-                <li class="active" th:if="${session.auth == null or !session.auth}">
+                <li class="active">
                     <a data-reveal-id="myModal" href="#">Nosotros</a>
                 </li>
-                <li class="active" th:if="${session.auth}"><a data-reveal-id="myModalProfile" href="#" th:text="session.name">Perfil</a></li>
+                <li class="active" th:if="${@sec.isAdmin(#httpSession)}">
+                    <a data-reveal-id="myModalProfile" href="#"
+                       th:text="${session.username}">
+                        Perfil
+                    </a>
+                </li>
                 <!--<li class="active" th:if="${session.auth == null or !session.auth}"><a data-reveal-id="myModalRegister" href="#">Registro</a></li>-->
                 <!--<li class="active" th:if="${session.auth == null or !session.auth}"><a data-reveal-id="myModalLogin" href="#">Login</a></li>-->
             </ul>
@@ -69,7 +82,8 @@
     </div>
 
     <!--http://foundation.zurb.com/sites/docs/v/5.5.3/components/reveal.html-->
-    <div id="myModalProfile" class="reveal-modal" data-reveal aria-labelledby="modalTitleProfile" aria-hidden="true" role="dialog">
+    <div id="myModalProfile" class="reveal-modal" data-reveal aria-labelledby="modalTitleProfile" aria-hidden="true"
+         role="dialog">
         <h2 id="modalTitleProfile">Lamator, una tienda peruana</h2>
         <p class="lead">Llama Alpaca Modern Artisans sTORe</p>
         <p>Ofrecemos los productos de artesanos peruanos seleccionados hechos con finos materiales
@@ -80,21 +94,23 @@
     </div>
 
     <!--http://foundation.zurb.com/sites/docs/v/5.5.3/components/reveal.html-->
-    <div id="myModalLogin" class="reveal-modal" data-reveal aria-labelledby="modalTitleLogin" aria-hidden="true" role="dialog">
+    <div th:if="${!@sec.isAdmin(#httpSession)}" id="myModalLogin" class="reveal-modal" data-reveal
+         aria-labelledby="modalTitleLogin" aria-hidden="true" role="dialog">
         <h2 id="modalTitleLogin">Entra a Lamator</h2>
         <p class="lead">Llama Alpaca Modern Artisans sTORe</p>
 
-        <form action="#" th:action="@{/storeLogin}" th:object="${storeLogin}" method="post">
-            <p>Usuario: <input type="text" th:field="*{username}" /></p>
-            <p>Clave:   <input type="text" th:field="*{password}" /></p>
-            <p><input type="submit" value="Entrar" /> <input type="reset" value="Limpiar" /></p>
+        <form action="#" th:action="@{${@cons.adminLoginP}}" th:object="${storeLogin}" method="post">
+            <p>Usuario: <input type="text" th:field="*{username}"/></p>
+            <p>Clave: <input type="text" th:field="*{password}"/></p>
+            <p><input type="submit" value="Entrar"/> <input type="reset" value="Limpiar"/></p>
         </form>
 
         <a class="close-reveal-modal" aria-label="Close">&#215;</a>
     </div>
 
     <!--http://foundation.zurb.com/sites/docs/v/5.5.3/components/reveal.html-->
-    <div id="myModalRegister" class="reveal-modal" data-reveal aria-labelledby="modalTitleRegister" aria-hidden="true" role="dialog">
+    <div id="myModalRegister" class="reveal-modal" data-reveal aria-labelledby="modalTitleRegister" aria-hidden="true"
+         role="dialog">
         <h2 id="modalTitleRegister">Regístrate a Lamator</h2>
         <p class="lead">Llama Alpaca Modern Artisans sTORe</p>
         <p>Aqui va un form de registro</p>
