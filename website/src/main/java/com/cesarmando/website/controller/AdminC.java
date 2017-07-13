@@ -2,6 +2,7 @@ package com.cesarmando.website.controller;
 
 import com.cesarmando.website.dao.ProductDao;
 import com.cesarmando.website.dao.ProductTypeDao;
+import com.cesarmando.website.dao.UserDao;
 import com.cesarmando.website.dao.model.ProductE;
 import com.cesarmando.website.dao.model.ProductTypeE;
 import com.cesarmando.website.dao.model.UserE;
@@ -27,11 +28,13 @@ import java.util.List;
 public class AdminC {
 
     @Autowired
-    ProductDao productDao;
-    @Autowired
     ProductTypeDao productTypeDao;
     @Autowired
     SecurityService sec;
+    @Autowired
+    UserDao userDao;
+    @Autowired
+    ProductDao productDao;
 
     @GetMapping({ConsService.adminP})
     public String adminNew() {
@@ -44,30 +47,37 @@ public class AdminC {
             @PathVariable String option) {
         if (!sec.isAdmin(session))
             return ConsService.redirectStore;
-        option = option == null ? "profile" : option;
         model.addAttribute("option", option);
         String destiny = "admin";
         switch (option) {
             case "profile":
-                model.addAttribute("obj", new ProductE());
+                model.addAttribute("obj", ProductE.init());
+                break;
+            case "product":
+                model.addAttribute("obj", ProductE.init());
                 break;
             default:
-                destiny = ConsService.storeP;
+                destiny = ConsService.redirectStore;
         }
+        model.addAttribute("objPostPath", ConsService.adminP + "/" + option + "/new");
         return destiny;
     }
 
     @PostMapping({ConsService.adminP + "/{option}/new"})
     public String adminNewPost(
-            HttpSession session, Model model,
-            @PathVariable String option, @RequestBody String body) {
-        System.out.println(body);
+            HttpSession session, @PathVariable String option,
+            ProductE product, UserE profile) {
         if (!sec.isAdmin(session))
             return ConsService.redirectStore;
-        String destiny = ConsService.adminP + "/" + option + "/new";
+        String destiny = "/admin/" + option + "/new";
         switch (option) {
             case "profile":
-                model.addAttribute("obj", new ProductE());
+                System.out.println(profile);
+                userDao.save(profile);
+                break;
+            case "product":
+                System.out.println(product);
+                productDao.save(product);
                 break;
             default:
                 destiny = ConsService.storeP;
@@ -97,8 +107,7 @@ public class AdminC {
 
     @ModelAttribute("types")
     public List<ProductTypeE> productTypes() {
-        var types = productTypeDao
-                .findAllByActiveTrueOrderByIdAsc();
+        var types = productTypeDao.findAllByActiveTrueOrderByIdAsc();
         return types;
     }
 }

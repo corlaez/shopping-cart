@@ -26,7 +26,7 @@
 
 <div><!--admin page-->
 
-    <ul  class="crudWrapper center small-block-grid-1 medium-block-grid-1 large-block-grid-3">
+    <ul  class="crudWrapper center small-block-grid-1 medium-block-grid-1 large-block-grid-2">
         <div th:text="${option}"></div>
         <li th:if="${option == 'profile'}">
             <!--<div class="coin-wrapper" th:object="${product}">-->
@@ -45,6 +45,17 @@
                    <!--data-style="slide-right" th:onclick="${'app.addtoCart('+ product.id +');'}">Añadir a la canasta</a>-->
                 <!--<div class="clearfix"></div>-->
             <!--</div>-->
+        </li>
+        <li th:if="${option == 'product'}">
+            <h1>Nuevo Producto</h1>
+            <form action="#" th:action="@{${objPostPath}}" th:object="${obj}" method="post">
+                <p>Nombre: <input type="text" th:field="*{name}"/></p>
+                <p>Descripción: <input type="text" th:field="*{description}"/></p>
+                <p>Precio: <input type="number" th:field="*{price}"/></p>
+                <p>Id tipo: <input type="number" th:field="*{productTypeId}"/></p>
+                <p>Ruta Imagen: <input type="text" th:field="*{image}"/></p>
+                <p><input type="submit" value="Enviar"/> <input type="reset" value="Limpiar"/></p>
+            </form>
         </li>
     </ul>
 </div>

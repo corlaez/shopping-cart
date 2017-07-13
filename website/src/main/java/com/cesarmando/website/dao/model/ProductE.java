@@ -1,6 +1,7 @@
 package com.cesarmando.website.dao.model;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.text.DecimalFormat;
 /**
  * Created by jarma on 4/11/2017.
  */
+@Data
 @Entity
 @Table(name = "product", schema = "public")
 public class ProductE {
@@ -27,10 +29,11 @@ public class ProductE {
     @Getter @Setter
     private String image;
     @Getter @Setter
-    private Integer stock = 100;
+    private Integer stock;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public Integer getId() {
         return id;
     }
@@ -121,5 +124,12 @@ public class ProductE {
 
     public String fPrice(){
         return df.format(price);
+    }
+
+    public static ProductE init() {
+        ProductE o = new ProductE();
+        o.active = true;
+        o.stock = 100;
+        return o;
     }
 }
