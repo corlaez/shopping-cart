@@ -16,9 +16,9 @@ public class AdminController {
     @Autowired
     SecurityService securityService;
 
-    @GetMapping("/admin")
-    public String login() {
-        return "login";
-    }
+//    @GetMapping("/admin")
+//    public String login() {
+//        return "login";
+//    }
 
 }

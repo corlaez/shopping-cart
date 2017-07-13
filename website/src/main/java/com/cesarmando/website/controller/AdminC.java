@@ -2,6 +2,7 @@ package com.cesarmando.website.controller;
 
 import com.cesarmando.website.dao.ProductDao;
 import com.cesarmando.website.dao.ProductTypeDao;
+import com.cesarmando.website.dao.model.ProductE;
 import com.cesarmando.website.dao.model.ProductTypeE;
 import com.cesarmando.website.dao.model.UserE;
 import com.cesarmando.website.forms.StoreLogin;
@@ -12,10 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.PathParam;
@@ -35,18 +33,23 @@ public class AdminC {
     @Autowired
     SecurityService sec;
 
+    @GetMapping({ConsService.adminP})
+    public String adminNew() {
+        return ConsService.redirect + ConsService.adminP + "/profile/new";
+    }
+
     @GetMapping({ConsService.adminP + "/{option}/new"})
-    public String admin(
+    public String adminNew(
             HttpSession session, Model model,
             @PathVariable String option) {
         if (!sec.isAdmin(session))
             return ConsService.redirectStore;
         option = option == null ? "profile" : option;
-        model.addAttribute("type", option);
+        model.addAttribute("option", option);
         String destiny = "admin";
         switch (option) {
             case "profile":
-                model.addAttribute("obj", new UserE());
+                model.addAttribute("obj", new ProductE());
                 break;
             default:
                 destiny = ConsService.storeP;
@@ -54,8 +57,26 @@ public class AdminC {
         return destiny;
     }
 
+    @PostMapping({ConsService.adminP + "/{option}/new"})
+    public String adminNewPost(
+            HttpSession session, Model model,
+            @PathVariable String option, @RequestBody String body) {
+        System.out.println(body);
+        if (!sec.isAdmin(session))
+            return ConsService.redirectStore;
+        String destiny = ConsService.adminP + "/" + option + "/new";
+        switch (option) {
+            case "profile":
+                model.addAttribute("obj", new ProductE());
+                break;
+            default:
+                destiny = ConsService.storeP;
+        }
+        return ConsService.redirect + destiny;
+    }
+
     @PostMapping(ConsService.adminLoginP)
-    public String greetingSubmit(HttpSession session, @ModelAttribute StoreLogin storeLogin) {
+    public String adminLogin(HttpSession session, @ModelAttribute StoreLogin storeLogin) {
         return sec.login(
                 storeLogin.getUsername(),
                 storeLogin.getPassword(),

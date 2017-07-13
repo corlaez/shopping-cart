@@ -16,7 +16,7 @@
     <nav class="top-bar" data-topbar role="navigation">
         <ul class="title-area">
             <li class="name">
-                <h1><a th:href="@{@cons.allP}">Lamator</a></h1>
+                <h1><a th:href="@{${@cons.storeAllP}}">Lamator</a></h1>
             </li>
             <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
             <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
@@ -59,7 +59,7 @@
                     <a data-reveal-id="myModal" href="#">Nosotros</a>
                 </li>
                 <li class="active" th:if="${@sec.isAdmin(#httpSession)}">
-                    <a data-reveal-id="myModalProfile" href="#"
+                    <a th:href="@{${@cons.adminP}}"
                        th:text="${session.username}">
                         Perfil
                     </a>
@@ -90,21 +90,6 @@
             andinos de la más alta calidad.
             <br/><br/>
             Fernando Aragón, Cesar Valverde, Armando Córdova</p>
-        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-    </div>
-
-    <!--http://foundation.zurb.com/sites/docs/v/5.5.3/components/reveal.html-->
-    <div th:if="${!@sec.isAdmin(#httpSession)}" id="myModalLogin" class="reveal-modal" data-reveal
-         aria-labelledby="modalTitleLogin" aria-hidden="true" role="dialog">
-        <h2 id="modalTitleLogin">Entra a Lamator</h2>
-        <p class="lead">Llama Alpaca Modern Artisans sTORe</p>
-
-        <form action="#" th:action="@{${@cons.adminLoginP}}" th:object="${storeLogin}" method="post">
-            <p>Usuario: <input type="text" th:field="*{username}"/></p>
-            <p>Clave: <input type="text" th:field="*{password}"/></p>
-            <p><input type="submit" value="Entrar"/> <input type="reset" value="Limpiar"/></p>
-        </form>
-
         <a class="close-reveal-modal" aria-label="Close">&#215;</a>
     </div>
 

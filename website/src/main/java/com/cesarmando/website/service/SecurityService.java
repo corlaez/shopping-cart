@@ -49,6 +49,7 @@ public class SecurityService {
     }
 
     public boolean isAdmin(HttpSession session){
+        if(session == null) return false;
         Boolean isAdmin = (Boolean) session.getAttribute("admin");
         return isAdmin == null ? false : isAdmin;
     }

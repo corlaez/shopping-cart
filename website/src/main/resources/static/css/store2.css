@@ -271,6 +271,10 @@ body span, body p, body h3, body small, body h4, body h5, body h1, body a, body 
     margin: 5em;
 }
 
+.crudWrapper {
+    margin: 5em;
+}
+
 .cart {
     position: absolute;
     width: 280px;
