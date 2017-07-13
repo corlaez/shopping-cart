@@ -3,6 +3,7 @@ package com.cesarmando.website.controller;
 import com.cesarmando.website.config.GetMappingJson;
 import com.cesarmando.website.config.MyConfig;
 import com.cesarmando.website.config.PostMappingJson;
+import com.cesarmando.website.service.ConsService;
 import com.cesarmando.website.service.SecurityService;
 import com.cesarmando.website.viewmodel.MyAjaxResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpSession;
  */
 @Slf4j
 @RestController
-public class HomeController {
+public class StoreRC {
 
     @Autowired
     SecurityService securityService;
@@ -55,7 +56,7 @@ public class HomeController {
 
     @GetMappingJson("/cartNextVisible/{nextVisible}")
     public MyAjaxResponse toogleCart(HttpSession session, @PathVariable Boolean nextVisible) throws Throwable {
-        session.setAttribute(MainController.CART_NEXT_VISIBLE, nextVisible);
+        session.setAttribute(ConsService.cartNextVisibleKey, nextVisible);
         return MyAjaxResponse.data("" + nextVisible);
     }
 }

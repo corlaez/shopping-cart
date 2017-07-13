@@ -59,7 +59,7 @@ public class ControllerAspect {
         Object retVal = null;
         try {
             //todo meter
-            log.warn("SI HAY ASPECTOS");
+            //log.warn("SI HAY ASPECTOS");
             retVal = pjp.proceed();
             return retVal;
         }
@@ -78,9 +78,9 @@ public class ControllerAspect {
         Object retVal = null;
         try {
             //todo meter
-            log.warn("SI HAY ASPECTOS");
+            //log.warn("SI HAY ASPECTOS");
             retVal = pjp.proceed();
-            System.out.println("success: " + retVal);
+            //System.out.println("success: " + retVal);
             return retVal;
         }
         catch(Throwable th) {//todo imnplement other catchs.

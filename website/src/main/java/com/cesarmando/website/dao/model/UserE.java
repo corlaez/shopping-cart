@@ -1,5 +1,6 @@
 package com.cesarmando.website.dao.model;
 
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 /**
  * Created by jarma on 4/11/2017.
  */
+@Data
 @Entity
 @Table(name = "user", schema = "public")
 public class UserE {
@@ -16,6 +18,8 @@ public class UserE {
     private Boolean superuser;
     private Boolean active;
     private Integer personId;
+
+    private String repeatPassword;
 
     @Id
     @Column(name = "id")
