@@ -39,8 +39,8 @@ public class AdminC {
     public String adminHome(HttpSession session) {
         if (!sec.isAdmin(session))
             return ConsService.redirectStore;
-        int userId = ((UserE)session.getAttribute("user")).getId();
-        return ConsService.redirect + ConsService.adminP + "/profile/" + userId;
+        //int userId = ((UserE) session.getAttribute("user")).getId();
+        return ConsService.redirect + ConsService.adminP + "/product/list";
     }
 
     @GetMapping({ConsService.adminP + "/{option}/{viewType}"})
@@ -64,7 +64,7 @@ public class AdminC {
             default:
                 success = handleNewOrEdit(option, model, Integer.parseInt(viewType));
         }
-        if(!success)//
+        if (!success)//
             destiny = "error";//
         return destiny;
     }
@@ -92,11 +92,11 @@ public class AdminC {
         Object objToEdit;
         switch (option) {
             case "profile":
-                if(isNew) objToEdit = new UserE();
+                if (isNew) objToEdit = new UserE();
                 else objToEdit = userDao.findOne(idObjToEdit);
                 break;
             case "product":
-                if(isNew) objToEdit = new ProductE();
+                if (isNew) objToEdit = new ProductE();
                 else objToEdit = productDao.findOne(idObjToEdit);
                 break;
             default:
@@ -109,9 +109,41 @@ public class AdminC {
         return true;
     }
 
+
+    @PostMapping({ConsService.adminP + "/{option}/{viewType}"})
+    public String adminNewPost(
+            HttpSession session, @PathVariable String option,
+            @PathVariable String viewType,
+            ProductE product, UserE profile) {
+        if (!sec.isAdmin(session))
+            return ConsService.redirectStore;
+        Integer id = null;
+        try {
+            id = Integer.parseInt(viewType);
+        } catch (Exception e) {
+        }
+        if (id == null && !viewType.equals("new"))
+            return ConsService.redirect + "/error";
+        switch (option) {
+            case "profile":
+                profile.setId(id);
+                System.out.println(profile);
+                userDao.save(profile);
+                break;
+            case "product":
+                product.setId(id);
+                System.out.println(product);
+                productDao.save(product);
+                break;
+        }
+        String destiny = "/admin/" + option + "/list";
+        return ConsService.redirect + destiny;
+    }
+
+
     @PostMapping(ConsService.adminLoginP)
     public String adminLogin(HttpSession session, @ModelAttribute StoreLogin storeLogin) {
-        return sec.login(
+        return ConsService.redirect + sec.login(
                 storeLogin.getUsername(),
                 storeLogin.getPassword(),
                 true,

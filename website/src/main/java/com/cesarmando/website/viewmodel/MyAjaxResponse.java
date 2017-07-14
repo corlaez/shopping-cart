@@ -27,13 +27,13 @@ public class MyAjaxResponse {
     private String confirmMsg;
     /** Json data sent to be evaluated by the client*/
     private String data;
-    /** A flag sent to be evaluated by the client*/
-    private String flag;//no recuerdo pa que es esto.
+    /** A flag to refresh by the client*/
+    private Boolean refresh;
     /** If present the Ajax response should redirect*/
     private String redirect;
 
     public String getRedirect() {
-        return ConsService.getRedirect() + redirect;
+        return redirect;
     }
 
     public MyAjaxResponse(String data){
@@ -62,6 +62,10 @@ public class MyAjaxResponse {
 
     public static MyAjaxResponse redirect(String redirect){
         return new MyAjaxResponse().setRedirect(redirect);
+    }
+
+    public static MyAjaxResponse refresh(boolean refresh){
+        return new MyAjaxResponse().setRefresh(refresh);
     }
 
     @Override

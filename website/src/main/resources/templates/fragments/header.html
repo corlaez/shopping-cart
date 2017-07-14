@@ -23,18 +23,47 @@
         </ul>
 
         <section class="top-bar-section">
-            <!-- Right Nav Section -->
-            <ul class="right">
+            <!-- Left Nav Section -->
+            <ul class="left">
                 <li class="active">
-                    <a href="/store/Todo">
-                        Todo
+                    <a data-reveal-id="myModal" href="#">Nosotros</a>
+                </li>
+                <li class="active" th:remove="${!@sec.isAdmin(#httpSession) ? 'all' : 'none'}">
+                    <!--<a th:href="@{${@cons.adminP + '/profile/' + session.user?.id}}"-->
+                    <a th:href="@{${@cons.adminP + '/product/list'}}"
+                       th:text="${session.username}">
+                        Perfil
                     </a>
                 </li>
-                <li class="active" th:each="type : ${types}">
-                    <a th:href="@{${@cons.storeP + '/' + type.name}}"
-                       th:text="${type.name}">
-                        Abrigos
-                    </a>
+                <li th:if="${@sec.isAdmin(#httpSession)}" class="has-dropdown">
+                    <a href="javascript:void(0);">Mantenimientos</a>
+                    <ul class="dropdown">
+                        <li th:class="${option == 'profile' ? 'active':''}">
+                            <a th:href="@{/admin/profile/list}">Perfil</a>
+                        </li>
+                        <li th:class="${option == 'product' ? 'active':''}">
+                            <a th:href="@{/admin/product/list}">Producto</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Right Nav Section -->
+            <ul class="right">
+                <li class="has-dropdown" th:remove="${!@sec.isAdmin(#httpSession) ? 'tag' : 'none'}">
+                    <a href="#" th:if="${@sec.isAdmin(#httpSession)}">Tienda</a>
+                    <ul class="dropdown" th:remove="${!@sec.isAdmin(#httpSession) ? 'tag' : 'none'}">
+                        <li th:class="${'todo'.equalsIgnoreCase(currType) ? 'active' : ''}">
+                            <a href="/store/Todo">
+                                Todo
+                            </a>
+                        </li>
+                        <li th:class="${type.name.equalsIgnoreCase(currType) ? 'active' : ''}" th:each="type : ${types}">
+                            <a th:href="@{${@cons.storeP + '/' + type.name}}"
+                               th:text="${type.name}">
+                                Abrigos
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="active">
                     <a th:if="${@sec.isAdmin(#httpSession)}"
@@ -43,29 +72,6 @@
                         Logoff
                     </a>
                 </li>
-
-                <!--<li class="has-dropdown">-->
-                <!--<a href="#">Right Button Dropdown</a>-->
-                <!--<ul class="dropdown">-->
-                <!--<li><a href="#">First link in dropdown</a></li>-->
-                <!--<li class="active"><a href="#">Active link in dropdown</a></li>-->
-                <!--</ul>-->
-                <!--</li>-->
-            </ul>
-
-            <!-- Left Nav Section -->
-            <ul class="left">
-                <li class="active">
-                    <a data-reveal-id="myModal" href="#">Nosotros</a>
-                </li>
-                <li class="active" th:if="${@sec.isAdmin(#httpSession)}">
-                    <a th:href="@{${@cons.adminP}}"
-                       th:text="${session.username}">
-                        Perfil
-                    </a>
-                </li>
-                <!--<li class="active" th:if="${session.auth == null or !session.auth}"><a data-reveal-id="myModalRegister" href="#">Registro</a></li>-->
-                <!--<li class="active" th:if="${session.auth == null or !session.auth}"><a data-reveal-id="myModalLogin" href="#">Login</a></li>-->
             </ul>
         </section>
     </nav>

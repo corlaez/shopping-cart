@@ -37,15 +37,14 @@ public class SecurityService {
                 return ajaxResponse;
             }
         }
-        ajaxResponse.setRedirect("/");
         ajaxResponse.setErrorMsg("Combinación usuario y contraseña inválida.");
+        ajaxResponse.setRedirect("/");
         return ajaxResponse;
     }
 
     public MyAjaxResponse logoff(HttpSession session){
         session.invalidate();
-        MyAjaxResponse ajaxResponse = new MyAjaxResponse();
-        return ajaxResponse;
+        return MyAjaxResponse.refresh(true);
     }
 
     public boolean isAdmin(HttpSession session){
@@ -54,8 +53,4 @@ public class SecurityService {
         return isAdmin == null ? false : isAdmin;
     }
 
-//    public UserE getUser(HttpSession session){
-//        UserE user = (UserE) session.getAttribute("user");
-//        return user;
-//    }
 }

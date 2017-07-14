@@ -5,6 +5,7 @@ import com.cesarmando.website.dao.ProductDao;
 import com.cesarmando.website.dao.UserDao;
 import com.cesarmando.website.dao.model.ProductE;
 import com.cesarmando.website.dao.model.UserE;
+import com.cesarmando.website.forms.StoreLogin;
 import com.cesarmando.website.service.ConsService;
 import com.cesarmando.website.service.SecurityService;
 import com.cesarmando.website.viewmodel.MyAjaxResponse;
@@ -28,31 +29,27 @@ public class AdminRC {
     @Autowired
     ProductDao productDao;
 
-    @PostMappingJson({ConsService.adminP + "/{option}/new"})
-    public String adminNewPost(
-            HttpSession session, @PathVariable String option,
-            ProductE product, UserE profile) {
-        if (!sec.isAdmin(session))
-            return ConsService.redirectStore;
-        String destiny = "/admin/" + option + "/new";
-        switch (option) {
-            case "profile":
-                System.out.println(profile);
-                userDao.save(profile);
-                break;
-            case "product":
-                System.out.println(product);
-                productDao.save(product);
-                break;
-            default:
-                destiny = ConsService.storeP;
-        }
-        return ConsService.redirect + destiny;
-    }
-
     @PostMappingJson(ConsService.adminLogoffP)
     public MyAjaxResponse logoff(HttpSession session) {
         sec.logoff(session);
-        return MyAjaxResponse.redirect(null);
+        return MyAjaxResponse.refresh(true);
+    }
+
+    @PostMappingJson(ConsService.adminP + "/{option}/delete/{id}" )
+    public MyAjaxResponse delete(
+            HttpSession session, @PathVariable String option,
+            @PathVariable Integer id) {
+        if (!sec.isAdmin(session))
+            return MyAjaxResponse
+                    .errorMsg("Necesitas estar logeado")
+                    .setRedirect("/");
+        switch (option){
+            case "product": productDao.delete(id); break;
+            case "profile":
+                if(userDao.count() > 0)
+                    userDao.delete(id);
+                break;
+        }
+        return MyAjaxResponse.redirect("/admin/" + option + "/list");
     }
 }

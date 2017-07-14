@@ -27,6 +27,9 @@
 <div><!--admin page-->
     <!--option<div th:text="${option}"></div>-->
     <!--viewType<div th:text="${viewType}"></div>-->
+    <div th:if="${viewType == 'list'}">
+
+    </div>
     <ul th:if="${viewType == 'list'}" class="crudWrapper center small-block-grid-1 medium-block-grid-1 large-block-grid-1">
         <li th:if="${option == 'profile'}">
             profile list
@@ -34,6 +37,7 @@
         <li th:if="${option == 'product'}">
             <h1>
                 Listado de Productos
+                <a class="right" th:href="@{${'/admin/' +option + '/new'}}">Nuevo</a>
             </h1>
             <table>
                 <thead>
@@ -54,11 +58,18 @@
                     <td th:text="${e.description}">Content Goes Here</td>
                     <td th:text="${e.price}">Content Goes Here</td>
                     <td th:text="${e.productTypeId}">Content Goes Here</td>
-                    <td><a th:href="${e.image}">Link</a></td>
                     <td>
-                        <a class="button tiny" th:href="@{${'/admin/product/' + e.id}}">Editar</a>
-                        <button class="tiny" th:onclick="${'postHome(''' + @cons.deleteProfileP + e.id + ''', null)'}">Eliminar</button>
-                        <!--<a th:href="@{${'/admin/product/' + e.id}}">Eliminar</a>-->
+                        <a class="th" th:href="${e.image}">
+                            <img style="max-height: 80px; max-width: 80px" th:src="${e.image}">
+                        </a>
+                        <!--<a th:href="${e.image}">Link</a>-->
+                    </td>
+                    <td>
+                        <ul class="stack button-group">
+                            <li><a class="button tiny" th:href="@{${'/admin/product/' + e.id}}">Editar</a></li>
+                            <li><button class="alert button tiny" th:onclick="${'postHome(''/admin/' + option + '/delete/' + e.id + ''', null)'}">Eliminar</button></li>
+                            <!--<a th:href="@{${'/admin/product/' + e.id}}">Eliminar</a>-->
+                        </ul>
                     </td>
                 </tr>
                 </tbody>
@@ -72,7 +83,9 @@
             <h1>
                 <div th:remove="tag" th:text="${newOrEdit}"></div>
                 Producto
+                <a class="right" th:href="@{${'/admin/' +option + '/list'}}">Lista</a>
             </h1>
+            <br/>
             <form action="#" th:action="@{${objPostPath}}" th:object="${obj}" method="post">
                 <p>Nombre: <input type="text" th:field="*{name}"/></p>
                 <p>Descripción: <input type="text" th:field="*{description}"/></p>
@@ -82,7 +95,9 @@
                             th:value="${type.id}" th:text="${type.name}">Abrigo</option>
                 </select></p>
                 <p>Ruta Imagen: <input type="text" th:field="*{image}"/></p>
-                <p><input type="submit" value="Enviar"/> <input type="reset" value="Limpiar"/></p>
+                <input class="button" type="submit" value="Enviar"/>
+                <input class="button info" type="reset" value="Limpiar"/>
+                <button class="button alert" type="button" th:if="${viewType != 'new'}" th:onclick="${'postHome(''/admin/' + option + '/delete/' + viewType + ''', null)'}">Eliminar</button>
             </form>
         </li>
     </ul>
@@ -100,6 +115,17 @@
     //this could be a param WishList
     var homeServer = /*[[${@cons.homeServer}]]*/null;
     //and this could be in a js file
+    var delayAndRedirect = function(msg){
+        setTimeout(
+            function() {
+                if(msg.redirect != null){
+                    window.location.href = homeServer + msg.redirect;
+                }
+                else if(msg.refresh == true){
+                    window.location.reload(true);
+                }
+            }, 2000);
+    }
     var getHome = function(path, data) {
         $.ajax(homeServer + path,{data: data})
             .done(function(msg) {
@@ -131,25 +157,30 @@
             .done(function(msg) {
                 if(msg.errorMsg != null){
                     //show message, stop.
+                    delayAndRedirect(msg);
                     return;
                 }
                 else if(msg.infoMsg != null){
                     //show message, stop.
+                    delayAndRedirect(msg);
                     return;
                 }
                 else if(msg.confirmMsg != null){
                     //show message pass function, stop
+                    delayAndRedirect(msg);
                     return;
                 }
                 else if(msg.successMsg != null){
                     //show message, continue
+                    delayAndRedirect(msg);
                 }
-                else if(msg.successMsg != null){
-                    //show message, continue
+                else if(msg.redirect != null){
+                    window.location.href = homeServer + msg.redirect;
+                    return;
                 }
-                else{
-                    console.log(msg.data);
+                else if(msg.refresh == true){
                     window.location.reload(true);
+                    return;
                 }
                 console.log(msg.data);
             });

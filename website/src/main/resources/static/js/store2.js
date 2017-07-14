@@ -33,50 +33,50 @@ var app = window.app || {},
         var productos = [
                 {
                     id : 1,
-                    img : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
+                    image : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
                     name : 'Libertad 5oz',
                     price : 299.00,
-                    desc : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
+                    description : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
                     stock : 4
                 },
                 {
                     id : 2,
                     name : 'Libertad 5oz',
-                    img : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
+                    image : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
                     price : 199.00,
-                    desc : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
+                    description : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
                     stock : 2
                 },
                 {
                     id : 3,
-                    img : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
+                    image : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
                     name : 'Libertad 5oz',
                     price : 299.00,
-                    desc : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
+                    description : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
                     stock : 4
                 },
                 {
                     id : 4,
                     name : 'Libertad 5oz',
-                    img : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
+                    image : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
                     price : 199.00,
-                    desc : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
+                    description : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
                     stock : 2
                 },
                 {
                     id : 5,
                     name : 'Libertad 5oz',
-                    img : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
+                    image : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
                     price : 99.00,
-                    desc : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
+                    description : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
                     stock : 1
                 },
                 {
                     id : 6,
                     name : 'Libertad 5oz',
-                    img : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
+                    image : 'http://libertadproof.com/wp-content/uploads/2016/02/87952_Obv.jpg',
                     price : 80.00,
-                    desc : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
+                    description : 'Libertad 5oz BU 1998 Contains 1 Libertad 5oz BU brilliant uncirculated .999 fine Silver. In capsule The same coin as you see in this picture. We only Ship to the US, and is FREE Shipping Shipping time 5-7 business days via UPS express with tracking and insurance. Payments only via Paypal.',
                     stock : 0
                 }
             ],
@@ -88,7 +88,7 @@ var app = window.app || {},
             if(productos[i].stock > 0){
                 contenido+= '<li>'
                 contenido+= '   <div class="coin-wrapper">'
-                contenido+= '		<img src="'+productos[i].img+'" alt="'+productos[i].name+'">'
+                contenido+= '		<img src="'+productos[i].image+'" alt="'+productos[i].name+'">'
                 contenido+= '		<span class="large-12 columns product-details">'
                 contenido+= '			<h3>'+productos[i].name+'<br/><br/>Precio: <span class="price">$ '+productos[i].price+' USD</span></h3>'
                 contenido+= '			<h3>Tenemos: <span class="stock">'+productos[i].stock+'</span></h3>'
@@ -118,7 +118,7 @@ var app = window.app || {},
                 if(cant > 0){
                     setTimeout(function(){
                         var cart = (JSON.parse(localStorage.getItem('cart')) != null) ? JSON.parse(localStorage.getItem('cart')) : {items : []} ;
-                        app.searchProd(cart,producto.id,parseInt(cant),producto.name,producto.price,producto.img,producto.stock)
+                        app.searchProd(cart,producto.id,parseInt(cant),producto.name,producto.price,producto.image,producto.stock)
                         l.stop();
                     },2000)
                 }else{
@@ -132,7 +132,7 @@ var app = window.app || {},
         }
     }
 
-    app.searchProd = function(cart,id,cant,name,price,img,available){
+    app.searchProd = function(cart,id,cant,name,price,image,available){
         //si le pasamos un valor negativo a la cantidad, se descuenta del carrito
         var curProd = _.find(cart.items, { 'id': id })
 
@@ -151,7 +151,7 @@ var app = window.app || {},
                 cant : cant,
                 name : name,
                 price : price,
-                img : img,
+                image : image,
                 available : available
             }
             cart.items.push(prod)
@@ -179,7 +179,7 @@ var app = window.app || {},
 
                 total = total  + (n.cant * n.price)
                 items += '<li>'
-                items += '<img src="'+n.img+'" />'
+                items += '<img src="'+n.image+'" />'
                 // width:100px;overflow:hidden;height:50px;line-height:50px;
                 items += '<h3 class="title"><div style="width:200px;overflow:hidden;height: 19px">'+n.name+'</div><span class="price">'+n.cant+' x $ '+n.price+' USD</span> <button class="add" onclick="app.updateItem('+n.id+','+n.available+')"><i class="icon ion-minus-circled"></i></button> <button onclick="app.deleteProd('+n.id+')" ><i class="icon ion-close-circled"></i></button><div class="clearfix"></div></h3>'
                 items += '</li>'

@@ -91,6 +91,17 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var homeServer = /*[[${@cons.homeServer}]]*/null;
+    var delayAndRedirect = function(msg){
+        setTimeout(
+            function() {
+                if(msg.redirect != null){
+                    window.location.href = homeServer + msg.redirect;
+                }
+                else if(msg.refresh == true){
+                    window.location.reload(true);
+                }
+            }, 2000);
+    }
     var getHome = function(path, data) {
         $.ajax(homeServer + path,{data: data})
             .done(function(msg) {
@@ -122,18 +133,30 @@
             .done(function(msg) {
                 if(msg.errorMsg != null){
                     //show message, stop.
+                    delayAndRedirect(msg);
                     return;
                 }
-                if(msg.infoMsg != null){
+                else if(msg.infoMsg != null){
                     //show message, stop.
+                    delayAndRedirect(msg);
                     return;
                 }
-                if(msg.confirmMsg != null){
+                else if(msg.confirmMsg != null){
                     //show message pass function, stop
+                    delayAndRedirect(msg);
                     return;
                 }
-                if(msg.successMsg != null){
+                else if(msg.successMsg != null){
                     //show message, continue
+                    delayAndRedirect(msg);
+                }
+                else if(msg.redirect != null){
+                    window.location.href = homeServer + msg.redirect;
+                    return;
+                }
+                else if(msg.refresh == true){
+                    window.location.reload(true);
+                    return;
                 }
                 console.log(msg.data);
             });

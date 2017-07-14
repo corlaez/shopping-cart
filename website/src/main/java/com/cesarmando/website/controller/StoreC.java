@@ -36,7 +36,7 @@ public class StoreC {
     Gson gson;
 
     @GetMapping({"/", ConsService.storeP})
-    public String home(HttpSession session) {
+    public String homeRedirectToLastOrAll(HttpSession session) {
         String lastProductTypeNamePath = (String)
                 session.getAttribute(ConsService.lastTypeKey);
         lastProductTypeNamePath = "/" + (
@@ -79,18 +79,8 @@ public class StoreC {
             session.setAttribute(ConsService.cartNextVisibleKey, false);
         model.addAttribute("cartNextVisible", cartNextVisible);
         model.addAttribute("storeLogin", new StoreLogin());
+        model.addAttribute("currType", typeName);
         return "home";
-    }
-
-
-    @PostMapping("/storeLogin")
-    public String greetingSubmit(HttpSession session, @ModelAttribute StoreLogin storeLogin) {
-        return securityService.login(
-                storeLogin.getUsername(),
-                storeLogin.getPassword(),
-                true,
-                session)
-                .getRedirect();
     }
 
     @GetMapping(value = "/error")
