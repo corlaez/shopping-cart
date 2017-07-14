@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
  */
 @Service("cons")
 @Slf4j
-
 public class ConsService {
     //words
     @Getter
@@ -41,6 +40,12 @@ public class ConsService {
     @Getter
     public static final
     String adminLogoffP = adminP + "/logoff";
+    @Getter
+    public static final
+    String deleteProductP = adminP + "/product/delete/";
+    @Getter
+    public static final
+    String deleteProfileP = adminP + "/profile/delete/";
 
     //redirects
     @Getter
@@ -57,4 +62,5 @@ public class ConsService {
     @Getter
     public static final
     String cartNextVisibleKey = "$cartNextVisibleKey$";
+
 }

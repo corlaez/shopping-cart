@@ -1,9 +1,6 @@
 package com.cesarmando.website.dao.model;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -20,16 +17,12 @@ public class ProductE {
 
     private Integer id;
     private String name;
-    @SerializedName("desc")
     private String description;
     private BigDecimal price;
-    private Boolean active;
+    private Boolean active = true;
     private Integer productTypeId;
-    @SerializedName("img")
-    @Getter @Setter
     private String image;
-    @Getter @Setter
-    private Integer stock;
+    private Integer stock = 100;
 
     @Id
     @Column(name = "id")
@@ -126,10 +119,4 @@ public class ProductE {
         return df.format(price);
     }
 
-    public static ProductE init() {
-        ProductE o = new ProductE();
-        o.active = true;
-        o.stock = 100;
-        return o;
-    }
 }

@@ -60,6 +60,10 @@ public class MyAjaxResponse {
         return new MyAjaxResponse(data);
     }
 
+    public static MyAjaxResponse redirect(String redirect){
+        return new MyAjaxResponse().setRedirect(redirect);
+    }
+
     @Override
     public String toString() {
         return "MyAjaxResponse{" +

@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.PathParam;
 import java.util.List;
 
 /**
@@ -37,66 +36,81 @@ public class AdminC {
     ProductDao productDao;
 
     @GetMapping({ConsService.adminP})
-    public String adminNew() {
-        return ConsService.redirect + ConsService.adminP + "/profile/new";
+    public String adminHome(HttpSession session) {
+        if (!sec.isAdmin(session))
+            return ConsService.redirectStore;
+        int userId = ((UserE)session.getAttribute("user")).getId();
+        return ConsService.redirect + ConsService.adminP + "/profile/" + userId;
     }
 
-    @GetMapping({ConsService.adminP + "/{option}/new"})
-    public String adminNew(
+    @GetMapping({ConsService.adminP + "/{option}/{viewType}"})
+    public String adminCrud(
             HttpSession session, Model model,
-            @PathVariable String option) {
+            @PathVariable String option,
+            @PathVariable String viewType) {
         if (!sec.isAdmin(session))
             return ConsService.redirectStore;
         model.addAttribute("option", option);
+        model.addAttribute("viewType", viewType);
         String destiny = "admin";
-        switch (option) {
-            case "profile":
-                model.addAttribute("obj", ProductE.init());
+        boolean success;//
+        switch (viewType) {
+            case "new":
+                success = handleNewOrEdit(option, model, null);
                 break;
-            case "product":
-                model.addAttribute("obj", ProductE.init());
+            case "list":
+                success = handleList(option, model);
                 break;
             default:
-                destiny = ConsService.redirectStore;
+                success = handleNewOrEdit(option, model, Integer.parseInt(viewType));
         }
-        model.addAttribute("objPostPath", ConsService.adminP + "/" + option + "/new");
+        if(!success)//
+            destiny = "error";//
         return destiny;
     }
 
-    @PostMapping({ConsService.adminP + "/{option}/new"})
-    public String adminNewPost(
-            HttpSession session, @PathVariable String option,
-            ProductE product, UserE profile) {
-        if (!sec.isAdmin(session))
-            return ConsService.redirectStore;
-        String destiny = "/admin/" + option + "/new";
+    private boolean handleList(String option, Model model) {
+        List<?> list;
         switch (option) {
             case "profile":
-                System.out.println(profile);
-                userDao.save(profile);
+                list = userDao.findAllByOrderById();
                 break;
             case "product":
-                System.out.println(product);
-                productDao.save(product);
+                list = productDao.findAllByOrderById();
                 break;
             default:
-                destiny = ConsService.storeP;
+                return false;
         }
-        return ConsService.redirect + destiny;
+        model.addAttribute("list", list);
+        return true;
+    }
+
+    private boolean handleNewOrEdit(String option, Model model, Integer idObjToEdit) {
+        boolean isNew = idObjToEdit == null;
+        String newOrEdit = isNew ? "Nuevo" : "Editar";
+        model.addAttribute("newOrEdit", newOrEdit);
+        Object objToEdit;
+        switch (option) {
+            case "profile":
+                if(isNew) objToEdit = new UserE();
+                else objToEdit = userDao.findOne(idObjToEdit);
+                break;
+            case "product":
+                if(isNew) objToEdit = new ProductE();
+                else objToEdit = productDao.findOne(idObjToEdit);
+                break;
+            default:
+                return false;
+        }
+        model.addAttribute("obj", objToEdit);
+        String viewType = isNew ? "new" : idObjToEdit.toString();
+        String objPostPath = ConsService.adminP + "/" + option + "/" + viewType;
+        model.addAttribute("objPostPath", objPostPath);
+        return true;
     }
 
     @PostMapping(ConsService.adminLoginP)
     public String adminLogin(HttpSession session, @ModelAttribute StoreLogin storeLogin) {
-        return sec.login(
-                storeLogin.getUsername(),
-                storeLogin.getPassword(),
-                true,
-                session)
-                .getRedirect();
-    }
-
-    @PostMapping(ConsService.adminLogoffP)
-    public String logoff(HttpSession session, @ModelAttribute StoreLogin storeLogin) {
         return sec.login(
                 storeLogin.getUsername(),
                 storeLogin.getPassword(),

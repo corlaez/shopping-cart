@@ -18,8 +18,7 @@ public class UserE {
     private Boolean superuser;
     private Boolean active;
     private Integer personId;
-
-    private String repeatPassword;
+    private String repeatPassword;//t
 
     @Id
     @Column(name = "id")
@@ -28,18 +27,10 @@ public class UserE {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     @Basic
     @Column(name = "username")
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     @Basic
@@ -48,18 +39,10 @@ public class UserE {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Basic
     @Column(name = "superuser")
     public Boolean getSuperuser() {
         return superuser;
-    }
-
-    public void setSuperuser(Boolean superuser) {
-        this.superuser = superuser;
     }
 
     @Basic
@@ -68,18 +51,15 @@ public class UserE {
         return active;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
     @Basic
     @Column(name = "person_id")
     public Integer getPersonId() {
         return personId;
     }
 
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
+    @Transient
+    public String getRepeatPassword() {
+        return repeatPassword;
     }
 
     @Override
