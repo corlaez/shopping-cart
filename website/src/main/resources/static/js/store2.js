@@ -240,7 +240,8 @@ var app = window.app || {},
         //eso va a generar un formulario dinamico para paypal
         //con los productos y sus precios
         var cart = (JSON.parse(localStorage.getItem('cart')) != null) ? JSON.parse(localStorage.getItem('cart')) : {items : []} ;
-        var statics = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post"><input type="hidden" name="cmd" value="_cart"><input type="hidden" name="upload" value="1"><input type="hidden" name="currency_code" value="USD" /><input type="hidden" name="business" value="'+business_paypal+'">',
+        // var statics = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post"><input type="hidden" name="cmd" value="_cart"><input type="hidden" name="upload" value="1"><input type="hidden" name="currency_code" value="USD" /><input type="hidden" name="business" value="'+business_paypal+'">',
+        var statics = '<form id="updateCartForm" action="/pay/update" method="post">',
             dinamic = '',
             wrapper = $('#submitForm')
 
@@ -255,9 +256,7 @@ var app = window.app || {},
                 dinamic += '<input type="hidden" name="quantity_'+i+'" value="'+prod.cant+'" />'
                 i++;
             })
-
-            statics += dinamic + '<button type="submit" class="pay">Pagar &nbsp;<i class="ion-chevron-right"></i></button></form>'
-
+            statics += dinamic + '<button type="button" data-reveal-id="paymentDataModal" class="pay">Pagar &nbsp;<i class="ion-chevron-right"></i></button></form>'
             wrapper.html(statics)
         }
     }

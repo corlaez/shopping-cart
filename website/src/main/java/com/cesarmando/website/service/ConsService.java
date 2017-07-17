@@ -46,6 +46,9 @@ public class ConsService {
     @Getter
     public static final
     String deleteProfileP = adminP + "/profile/delete/";
+    @Getter
+    public static final
+    String payP = "/pay";
 
     //redirects
     @Getter

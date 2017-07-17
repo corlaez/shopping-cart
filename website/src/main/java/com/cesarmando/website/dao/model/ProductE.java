@@ -23,6 +23,8 @@ public class ProductE {
     private Integer productTypeId;
     private String image;
     private Integer stock = 100;
+    private Integer cant;//t
+    private Integer available;//t
 
     @Id
     @Column(name = "id")
@@ -83,6 +85,16 @@ public class ProductE {
 
     public void setProductTypeId(Integer productTypeId) {
         this.productTypeId = productTypeId;
+    }
+
+    @Transient
+    public Integer getCant() {
+        return cant;
+    }
+
+    @Transient
+    public Integer getAvailable() {
+        return available;
     }
 
     @Override

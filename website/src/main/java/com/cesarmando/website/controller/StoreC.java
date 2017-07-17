@@ -4,6 +4,7 @@ import com.cesarmando.website.dao.ProductDao;
 import com.cesarmando.website.dao.ProductTypeDao;
 import com.cesarmando.website.dao.model.ProductE;
 import com.cesarmando.website.dao.model.ProductTypeE;
+import com.cesarmando.website.forms.PaymentData;
 import com.cesarmando.website.forms.StoreLogin;
 import com.cesarmando.website.service.ConsService;
 import com.cesarmando.website.service.SecurityService;
@@ -80,6 +81,7 @@ public class StoreC {
         model.addAttribute("cartNextVisible", cartNextVisible);
         model.addAttribute("storeLogin", new StoreLogin());
         model.addAttribute("currType", typeName);
+        model.addAttribute("paymentData", new PaymentData());
         return "home";
     }
 

@@ -7,20 +7,21 @@
 <meta name="robots" content="noindex">
 <title>Title</title>
 <!--<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css"-->
-      <!--th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"-->
-      <!--rel="stylesheet" media="screen" />-->
+<!--th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"-->
+<!--rel="stylesheet" media="screen" />-->
 <!--<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/js/bootstrap.min.js"-->
-      <!--th:href="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"-->
-      <!--rel="stylesheet" media="screen" />-->
+<!--th:href="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"-->
+<!--rel="stylesheet" media="screen" />-->
 
 <!--<link rel="shortcut icon" type="image/x-icon"-->
-      <!--href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico">-->
+<!--href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico">-->
 <!--<link rel="mask-icon" type=""-->
-      <!--href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg"-->
-      <!--color="#111">-->
+<!--href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg"-->
+<!--color="#111">-->
 
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
-<link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css?ver=4.4.2">
+<link rel="stylesheet prefetch"
+      href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css?ver=4.4.2">
 <link rel="stylesheet prefetch" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/ladda.min.css">
 <link rel="stylesheet" href="/css/store2.css"/>
@@ -28,11 +29,13 @@
 
 <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
         th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>
+<script src="jquery.serialize-object.min.js"></script>
 </head>
 <body>
 <!--/*@thymesVar id="var" type="java.lang.String"*/-->
 <div style="text-align: center;margin-top: 0px; margin-right: 0px; margin-bottom: 0px; padding: 5px; border: 0px; background: #1ebea5; overflow: hidden; position: fixed; z-index: 16000002; width: 190px; height: 30px; right: 10px; bottom: 0px;">
-    <a style="color: white;" target="_blank" href="https://api.whatsapp.com/send?phone=51980415200&text=Lamator,%20tengo%20una%20consulta">WhatsAppeanos!</a>
+    <a style="color: white;" target="_blank"
+       href="https://api.whatsapp.com/send?phone=51980415200&text=Lamator,%20tengo%20una%20consulta">WhatsAppeanos!</a>
 </div>
 
 <div th:insert="fragments/header :: header"></div>
@@ -46,10 +49,11 @@
         <ul class="cart"></ul>
     </div>
     <!--lista de productos-->
-    <ul  class="productosWrapper center small-block-grid-1 medium-block-grid-2 large-block-grid-3">
+    <ul class="productosWrapper center small-block-grid-1 medium-block-grid-2 large-block-grid-3">
         <li th:each="product, iter : ${products}">
             <div class="coin-wrapper" th:object="${product}">
-                <img th:src="*{image}" src="https://www.polyvore.com/cgi/img-thing?.out=jpg&size=l&tid=143732127" alt="Abrigo de llama">
+                <img th:src="*{image}" src="https://www.polyvore.com/cgi/img-thing?.out=jpg&size=l&tid=143732127"
+                     alt="Abrigo de llama">
                 <span class="large-12 columns product-details">
                     <h3>
                         <div th:remove="tag" th:text="*{name}">
@@ -66,6 +70,23 @@
             </div>
         </li>
     </ul>
+</div>
+
+<!--http://foundation.zurb.com/sites/docs/v/5.5.3/components/reveal.html-->
+<div th:if="${!@sec.isAdmin(#httpSession)}" id="paymentDataModal" class="reveal-modal" data-reveal
+     aria-labelledby="modalTitleLogin" aria-hidden="true" role="dialog">
+    <h2 id="modalTitlePaymentData">Completa los datos</h2>
+    <p class="lead">Llama Alpaca Modern Artisans sTORe</p>
+    <form id="payForm" action="#" th:object="${paymentData}" method="post">
+        <p>Nombre: <input type="text" th:field="*{name}"/></p>
+        <p>Apellido: <input type="text" th:field="*{lastname}"/></p>
+        <p>Dirección de envio: <input type="text" th:field="*{address}"/></p>
+        <p>Número de tarjeta: <input type="text" th:field="*{cardNumber}"/></p>
+        <p>CCV: <input type="text" th:field="*{ccv}"/></p>
+        <p>Vencimiento: <input type="date" th:field="*{expirationDate}"/></p>
+        <p><input th:onclick="@{${'var x = getFormData(''#payForm''); x.items = JSON.stringify(JSON.parse(localStorage.cart).items); postHome(''' + @cons.payP + ''', x)'}}" class="button" type="button" value="Enviar"/> <input class="button" type="reset" value="Limpiar"/></p>
+    </form>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
 
 <!--http://foundation.zurb.com/sites/docs/v/5.5.3/components/reveal.html-->
@@ -91,83 +112,101 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var homeServer = /*[[${@cons.homeServer}]]*/null;
-    var delayAndRedirect = function(msg){
+    var delayAndRedirect = function (msg) {
+        console.log("delayAndRedirect");
         setTimeout(
-            function() {
-                if(msg.redirect != null){
+            function () {
+                if (msg.redirect != null) {
                     window.location.href = homeServer + msg.redirect;
                 }
-                else if(msg.refresh == true){
+                else if (msg.refresh == true) {
                     window.location.reload(true);
                 }
             }, 2000);
     }
-    var getHome = function(path, data) {
-        $.ajax(homeServer + path,{data: data})
-            .done(function(msg) {
-                if(msg.errorMsg != null){
+    var getHome = function (path, data) {
+        console.log("getHome");
+        $.ajax(homeServer + path, {data: data})
+            .done(function (msg) {
+                if (msg.errorMsg != null) {
                     //show message, stop.
                     return;
                 }
-                if(msg.infoMsg != null){
+                if (msg.infoMsg != null) {
                     //show message, stop.
                     return;
                 }
-                if(msg.confirmMsg != null){
+                if (msg.confirmMsg != null) {
                     //show message pass function, stop
                     return;
                 }
-                if(msg.successMsg != null){
+                if (msg.successMsg != null) {
                     //show message, continue
                 }
                 console.log(msg.data);
             });
     }
-    var postHome = function(path, data) {
+    var postHome = function (path, data) {
+        console.log("postHome('" + path + "', " + data);
         $.ajax(
             homeServer + path,
             {
                 method: "POST",
-                data: data
+                data: JSON.stringify(data)
             })
-            .done(function(msg) {
-                if(msg.errorMsg != null){
+            .done(function (msg) {
+                if (msg.errorMsg != null) {
                     //show message, stop.
                     delayAndRedirect(msg);
                     return;
                 }
-                else if(msg.infoMsg != null){
+                else if (msg.infoMsg != null) {
                     //show message, stop.
                     delayAndRedirect(msg);
                     return;
                 }
-                else if(msg.confirmMsg != null){
+                else if (msg.confirmMsg != null) {
                     //show message pass function, stop
                     delayAndRedirect(msg);
                     return;
                 }
-                else if(msg.successMsg != null){
+                else if (msg.successMsg != null) {
                     //show message, continue
                     delayAndRedirect(msg);
                 }
-                else if(msg.redirect != null){
+                else if (msg.redirect != null) {
                     window.location.href = homeServer + msg.redirect;
                     return;
                 }
-                else if(msg.refresh == true){
+                else if (msg.refresh == true) {
                     window.location.reload(true);
                     return;
                 }
                 console.log(msg.data);
             });
     }
+    var subForm = function (name) {
+        console.log("subForm " + name);
+        var url = $(name).attr('action'),
+            data = $(name).closest('form').serialize();
+        postHome(url, data);
+    };
+    var getFormData = function(formSelector){
+        var $form = $(formSelector);
+        var unindexed_array = $form.serializeArray();
+        var indexed_array = {};
+        $.map(unindexed_array, function(n, i){
+            indexed_array[n['name']] = n['value'];
+        });
+        return indexed_array;
+    };
     var jsonProducts = /*[[${productsJSON}]]*/null;
     var cartNextVisible = /*[[${cartNextVisible}]]*/null;
     localStorage.setItem('productos', jsonProducts);
     $(document).foundation();
     var admin = /*[[${admin}]]*/null;
-    if(admin){
-        $("#myModalLogin").foundation('reveal','open');
+    if (admin) {
+        $("#myModalLogin").foundation('reveal', 'open');
         $(document).on('closed.fndtn.reveal', '[data-reveal]', function () {
             window.location.href = "http://localhost:8080/";
         });
