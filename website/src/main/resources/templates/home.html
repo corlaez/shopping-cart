@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<link>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex"/>
 <title>Title</title>
 <!--<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css"-->
 <!--th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"-->
@@ -19,17 +18,15 @@
 <!--href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg"-->
 <!--color="#111">-->
 
-<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet prefetch"
-      href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css?ver=4.4.2">
-<link rel="stylesheet prefetch" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-<link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/ladda.min.css">
+      href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css?ver=4.4.2"/>
+<link rel="stylesheet prefetch" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+<link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/ladda.min.css"/>
 <link rel="stylesheet" href="/css/store2.css"/>
 <link rel="stylesheet" href="/css/core.css"/>
-
-<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
-        th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>
-<script src="jquery.serialize-object.min.js"></script>
+<script th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>
+<script src="https://unpkg.com/vue"></script>
 </head>
 <body>
 <!--/*@thymesVar id="var" type="java.lang.String"*/-->
@@ -77,14 +74,23 @@
      aria-labelledby="modalTitleLogin" aria-hidden="true" role="dialog">
     <h2 id="modalTitlePaymentData">Completa los datos</h2>
     <p class="lead">Llama Alpaca Modern Artisans sTORe</p>
-    <form id="payForm" action="#" th:object="${paymentData}" method="post">
+    <form id="payForm" th:action="@{${@cons.payP}}" th:object="${paymentData}" method="post">
         <p>Nombre: <input type="text" th:field="*{name}"/></p>
         <p>Apellido: <input type="text" th:field="*{lastname}"/></p>
         <p>Dirección de envio: <input type="text" th:field="*{address}"/></p>
         <p>Número de tarjeta: <input type="text" th:field="*{cardNumber}"/></p>
         <p>CCV: <input type="text" th:field="*{ccv}"/></p>
         <p>Vencimiento: <input type="date" th:field="*{expirationDate}"/></p>
-        <p><input th:onclick="@{${'var x = getFormData(''#payForm''); x.items = JSON.stringify(JSON.parse(localStorage.cart).items); postHome(''' + @cons.payP + ''', x)'}}" class="button" type="button" value="Enviar"/> <input class="button" type="reset" value="Limpiar"/></p>
+        <p v-for="(item, index) in cart">
+            <input v-bind:name="'items[' + index + '].id'" type="hidden" v-bind:value="item.id" />
+            <input v-bind:name="'items[' + index + '].name'" type="hidden" v-bind:value="item.name" />
+            <input v-bind:name="'items[' + index + '].cant'" type="hidden" v-bind:value="item.cant" />
+            <input v-bind:name="'items[' + index + '].price'" type="hidden" v-bind:value="item.price" />
+        </p>
+        <p>
+            <!--<input th:onclick="@{${'var x = getFormData(''#payForm''); x.items = JSON.stringify(JSON.parse(localStorage.cart).items); postHome(''' + @cons.payP + ''', x)'}}" class="button" type="button" value="Enviar"/> <input class="button" type="reset" value="Limpiar"/>-->
+            <input class="button" type="submit" value="Enviar"/><input class="button" type="reset" value="Limpiar"/>
+        </p>
     </form>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
@@ -204,6 +210,7 @@
     var cartNextVisible = /*[[${cartNextVisible}]]*/null;
     localStorage.setItem('productos', jsonProducts);
     $(document).foundation();
+    //store/admin opens a login modal that redirects on close
     var admin = /*[[${admin}]]*/null;
     if (admin) {
         $("#myModalLogin").foundation('reveal', 'open');
@@ -211,9 +218,17 @@
             window.location.href = "http://localhost:8080/";
         });
     }
+    //for vue payment form
+    var cartModal = new Vue({
+        el: '#paymentDataModal',
+        data: {
+            cart: JSON.parse(localStorage.cart).items
+        }
+    });
     /*]]>*/
 </script>
 <script type="text/javascript" src="/js/store2.js"></script>
+
 </body>
 </html>
 
