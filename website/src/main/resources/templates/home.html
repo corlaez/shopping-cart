@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="/css/core.css"/>
 <script th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>
 <script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/vuex"></script>
 </head>
 <body>
 <!--/*@thymesVar id="var" type="java.lang.String"*/-->
@@ -74,6 +75,13 @@
      aria-labelledby="modalTitleLogin" aria-hidden="true" role="dialog">
     <h2 id="modalTitlePaymentData">Completa los datos</h2>
     <p class="lead">Llama Alpaca Modern Artisans sTORe</p>
+    <div id="app">
+        <p>{{ items.length }}</p>
+        <p>
+            <button @click="addToCart">+</button>
+            <!--<button @click="decrement">-</button>-->
+        </p>
+    </div>
     <form id="payForm" th:action="@{${@cons.payP}}" th:object="${paymentData}" method="post">
         <p>Nombre: <input type="text" th:field="*{name}"/></p>
         <p>Apellido: <input type="text" th:field="*{lastname}"/></p>
@@ -218,13 +226,39 @@
             window.location.href = "http://localhost:8080/";
         });
     }
-    //for vue payment form
-    var cartModal = new Vue({
-        el: '#paymentDataModal',
-        data: {
-            cart: JSON.parse(localStorage.cart).items
+    const store = new Vuex.Store({
+            state: {
+                count: 0,
+                items: JSON.parse(localStorage.cart).items
+            },
+            mutations: {
+                increment(state) { state.count++; },
+                decrement(state) { state.count--; },
+                addToCart(state, item) { state.items.push(item); }
         }
     });
+
+    new Vue({
+        el: '#app',
+        computed: {
+            items () {
+                return store.state.items
+            }
+        },
+        methods: {
+            addToCart (it) {
+                store.commit('addToCart', it)
+            }
+        }
+    });
+    Vue.config.debug = true;
+    //for vue payment form
+//    var cartModal = new Vue({
+//        el: '#paymentDataModal',
+//        data: {
+//            cart: JSON.parse(localStorage.cart).items
+//        }
+//    });
     /*]]>*/
 </script>
 <script type="text/javascript" src="/js/store2.js"></script>
