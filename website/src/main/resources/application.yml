@@ -1,32 +1,62 @@
+#https://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html
+#spring.profiles.active: test
+#security.require-ssl: true
+
+custom.httpToHttps: false
+
 logging:
   level:
-    org.springframework.web: WARN
     com.cesarmando.website: DEBUG
+    org.springframework.web: WARN
+    org.eclipse.jetty.alpn: DEBUG
+    org.eclipse.jetty.http2.server: DEBUG
+    org.eclipse.jetty.servlets.PushCacheFilter: DEBUG
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} \n\t %msg%n"
     #console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
 server:
   error:
     path: /error
-server.error.whitelabel.enabled: false
-#
-# Development profile with templates and static resources reloading: http://blog.codeleak.pl/2016/12/thymeleaf-reload-templates-and-static-resources.html
-#
+    whitelabel.enabled: false
+  compression:
+    enabled: true
+
+#openssl s_client -connect localhost:8443
+server.http.port: 8080
+server.port: 8443
+server.ssl.key-store: keystore.p12
+server.ssl.key-store-password: 123456
+server.ssl.keyStoreType: PKCS12
+server.ssl.keyAlias: jetty1
+#min-response-size: 0
 
 # Path to project
 #project.base-dir: file:///C:/Projects/github/spring-boot-thymeleaf
 
-# Templates reloading during development
-spring.thymeleaf.check-template-location: true
-spring.thymeleaf.prefix: classpath:/templates/
-spring.thymeleaf.suffix: .html
-spring.thymeleaf.mode: LEGACYHTML5
-spring.thymeleaf.encoding: UTF-8
-spring.thymeleaf.content-type: text/html
-spring.thymeleaf.cache: false
-#spring.thymeleaf.prefix: classpath:/templates/
-#spring.thymeleaf.cache: false
+spring:
+  #Templates reloading during development
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    content-type: text/html
+    cache: false
+  #Static resources reloading during development
+  resources:
+    static-locations: classpath:/static/
+    cache-period: 0
 
-# Static resources reloading during development
-spring.resources.static-locations: classpath:/static/
-spring.resources.cache-period: 0
+
+#<argLine>-javaagent:${jetty.alpnAgent.path}</argLine>
+
+#"C:\Program Files\Java\jdk1.8.0_92\bin\java" "-Dmaven.multiModuleProjectDirectory=D:\MyCustomFolders\MyDesktop\shoppin cart\shopping-cart\website" "-Dmaven.home=C:\Program Files (x86)\JetBrains\IntelliJ IDEA 2017.1\plugins\maven\lib\maven3"
+
+#"-Dclassworlds.conf=C:\Program Files (x86)\JetBrains\IntelliJ IDEA 2017.1\plugins\maven\lib\maven3\bin\m2.conf"
+#"-javaagent:C:\Program Files (x86)\JetBrains\IntelliJ IDEA 2017.1\lib\idea_rt.jar=56474:
+C:\Program Files (x86)\JetBrains\IntelliJ IDEA 2017.1\bin"
+#-Dfile.encoding=UTF-8 -classpath "C:\Program Files (x86)\JetBrains\IntelliJ IDEA 2017.1\plugins\maven\lib\maven3\boot\plexus-classworlds-2.5.2.jar" org.codehaus.classworlds.Launcher -Didea.version=2017.1.5 deploy
+#[INFO] Scanning for projects...
+#[INFO]

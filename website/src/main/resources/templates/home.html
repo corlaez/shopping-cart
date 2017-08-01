@@ -2,8 +2,9 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
 <meta name="robots" content="noindex"/>
+<meta name="theme-color" content="#333"/>
 <title>Title</title>
 <!--<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css"-->
 <!--th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"-->
@@ -18,21 +19,22 @@
 <!--href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg"-->
 <!--color="#111">-->
 
-<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet prefetch"
+<link async rel="manifest" href="/manifest.json"/>
+<link async href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css"/>
+<link async  rel="stylesheet prefetch"
       href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css?ver=4.4.2"/>
-<link rel="stylesheet prefetch" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
-<link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/ladda.min.css"/>
-<link rel="stylesheet" href="/css/store2.css"/>
-<link rel="stylesheet" href="/css/core.css"/>
-<script th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>
+<link async rel="stylesheet prefetch" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+<link async rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/ladda.min.css"/>
+<link async rel="stylesheet" href="/css/store2.css"/>
+<link async rel="stylesheet" href="/css/core.css"/>
+<!--<script th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>-->
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/vuex"></script>
 </head>
 <body>
 <!--/*@thymesVar id="var" type="java.lang.String"*/-->
 <div style="text-align: center;margin-top: 0px; margin-right: 0px; margin-bottom: 0px; padding: 5px; border: 0px; background: #1ebea5; overflow: hidden; position: fixed; z-index: 16000002; width: 190px; height: 30px; right: 10px; bottom: 0px;">
-    <a style="color: white;" target="_blank"
+    <a style="color: white;" target="_blank" rel="noopener"
        href="https://api.whatsapp.com/send?phone=51980415200&text=Lamator,%20tengo%20una%20consulta">WhatsAppeanos!</a>
 </div>
 
@@ -118,12 +120,12 @@
 
 <div th:insert="fragments/footer :: footer"></div>
 
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js?ver=1.11.2"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js?ver=1.11.2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/spin.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/ladda.min.js"></script>
+<script async defer src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/spin.min.js"></script>
+<script async defer src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/0.9.8/ladda.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/js/foundation.min.js?ver=4.4.2"></script>
-<script th:inline="javascript">
+<script async defer th:inline="javascript">
     /*<![CDATA[*/
     var homeServer = /*[[${@cons.homeServer}]]*/null;
     var delayAndRedirect = function (msg) {
@@ -261,7 +263,18 @@
 //    });
     /*]]>*/
 </script>
-<script type="text/javascript" src="/js/store2.js"></script>
+<script  async defer>
+    if ('serviceWorker' in navigator) {
+        console.log("Will the service worker register?");
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(function(reg){
+                console.log("Yes, it did.");
+            }).catch(function(err) {
+            console.log("No it didn't. This happened: ", err)
+        });
+    }
+</script>
+<script async defer type="text/javascript" src="/js/store2.js"></script>
 
 </body>
 </html>

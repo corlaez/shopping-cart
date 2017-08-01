@@ -20,12 +20,31 @@ public class ThymeleafConfig {
         return templateEngine;
     }
 
+    @Bean(name = "jsTemplating")
+    public TemplateEngine jsTemplateEngine() {
+        TemplateEngine templateEngine = new TemplateEngine();
+        templateEngine.addTemplateResolver(jsTemplateResolver());
+        return templateEngine;
+    }
+
     private ITemplateResolver textTemplateResolver() {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setPrefix("/templates/text/");
         templateResolver.setSuffix(".txt");
         // https://github.com/thymeleaf/thymeleaf/issues/395
         templateResolver.setTemplateMode(TemplateMode.TEXT);
+        templateResolver.setCharacterEncoding("UTF8");
+        templateResolver.setCheckExistence(true);
+        templateResolver.setCacheable(false);
+        return templateResolver;
+    }
+
+    private ITemplateResolver jsTemplateResolver() {
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix("/templates/js/");
+        templateResolver.setSuffix(".js");
+        // https://github.com/thymeleaf/thymeleaf/issues/395
+        templateResolver.setTemplateMode(TemplateMode.JAVASCRIPT);
         templateResolver.setCharacterEncoding("UTF8");
         templateResolver.setCheckExistence(true);
         templateResolver.setCacheable(false);

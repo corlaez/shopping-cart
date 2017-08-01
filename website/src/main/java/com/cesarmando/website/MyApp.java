@@ -1,6 +1,11 @@
 package com.cesarmando.website;
 
 import com.google.gson.Gson;
+import org.apache.catalina.Context;
+import org.apache.catalina.connector.Connector;
+import org.apache.coyote.http2.Http2Protocol;
+import org.apache.tomcat.util.descriptor.web.SecurityCollection;
+import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,6 +13,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -25,7 +34,7 @@ import javax.sql.DataSource;
 @ComponentScan({"com.cesarmando.website.*"})
 @EntityScan("com.cesarmando.website.dao.model")
 @EnableJpaRepositories("com.cesarmando.website.dao")
-@EnableAspectJAutoProxy(proxyTargetClass=true)
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class MyApp {
 
     public static void main(String[] args) throws Exception {
@@ -35,7 +44,7 @@ public class MyApp {
     }
 
     @Bean
-    @Profile("!test")
+    @Profile("postgre")
     public DataSource dataSource() {
         return DataSourceBuilder
                 .create()
