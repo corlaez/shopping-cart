@@ -8,6 +8,9 @@ import org.eclipse.jetty.http2.HTTP2Cipher;
 import org.eclipse.jetty.http2.server.HTTP2CServerConnectionFactory;
 import org.eclipse.jetty.http2.server.HTTP2ServerConnectionFactory;
 import org.eclipse.jetty.server.*;
+import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.SecuredRedirectHandler;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -26,7 +29,6 @@ import org.springframework.stereotype.Component;
  * </ul>
  * @author Brian Clozel
  */
-//@Component
 public class JettyHttp2Customizer implements EmbeddedServletContainerCustomizer {
 
     private final ServerProperties serverProperties;
@@ -39,7 +41,6 @@ public class JettyHttp2Customizer implements EmbeddedServletContainerCustomizer 
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
         JettyEmbeddedServletContainerFactory factory = (JettyEmbeddedServletContainerFactory) container;
-
         factory.addServerCustomizers(new JettyServerCustomizer() {
             @Override
             public void customize(Server server) {
@@ -47,7 +48,6 @@ public class JettyHttp2Customizer implements EmbeddedServletContainerCustomizer 
                 int port = connector.getPort();
                 HttpConfiguration httpConfiguration = connector
                         .getConnectionFactory(HttpConnectionFactory.class).getHttpConfiguration();
-
                 if (serverProperties.getSsl() != null && serverProperties.getSsl().isEnabled()) {
                     SslContextFactory sslContextFactory = connector
                             .getConnectionFactory(SslConnectionFactory.class).getSslContextFactory();
@@ -57,8 +57,18 @@ public class JettyHttp2Customizer implements EmbeddedServletContainerCustomizer 
 
                     ServerConnector serverConnector = new ServerConnector(server, connectionFactories);
                     serverConnector.setPort(port);
-                    // override existing connectors with new ones
-                    server.setConnectors(new Connector[]{serverConnector});
+                    //8080 //
+                    HttpConnectionFactory h1ConnectionFactory = new HttpConnectionFactory(httpConfiguration);
+                    ServerConnector httpConnector = new ServerConnector(server, h1ConnectionFactory);
+                    httpConnector.setPort(8080);//todo handle by parameter.
+                    //redirect to secure//https://stackoverflow.com/questions/26123604/redirect-from-http-to-https-automatically-in-embedded-jetty
+//                    HandlerList handlers = new HandlerList();
+//                    handlers.addHandler(new SecuredRedirectHandler());
+//                    handlers.addHandler(new DefaultHandler()); // round things out
+//                    server.setHandler(handlers);
+                    //override existing connectors with http and https connectors
+                    server.setConnectors(new Connector[]{serverConnector, httpConnector});
+//                    server.setConnectors(new Connector[]{serverConnector});
                 } else {
                     HTTP2CServerConnectionFactory h2cServerConnectionFactory = new HTTP2CServerConnectionFactory(httpConfiguration);
                     HttpConnectionFactory h1ConnectionFactory = new HttpConnectionFactory(httpConfiguration);

@@ -264,7 +264,7 @@
     /*]]>*/
 </script>
 <script  async defer>
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && true) {
         console.log("Will the service worker register?");
         navigator.serviceWorker.register('/service-worker.js')
             .then(function(reg){

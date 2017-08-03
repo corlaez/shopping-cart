@@ -14,7 +14,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.2.RELEASE</version>
+        <version>1.5.6.RELEASE</version>
+        <!--<version>1.5.2.RELEASE</version>-->
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -39,14 +40,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -147,7 +140,16 @@
         <!--<version>2.15.122</version>-->
         <!--</dependency>-->
 
-        <!--Jetty http2 and ALPN-->
+        <!--TOMCAT TLS-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+        <!--Jetty HTTP/2 *needs ALPN VM option-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jetty</artifactId>
@@ -155,20 +157,25 @@
         <dependency>
             <groupId>org.eclipse.jetty.http2</groupId>
             <artifactId>http2-server</artifactId>
-            <version>9.4.6.v20170531</version>
-            <!--<version>9.4.0.v20161208</version>-->
+            <!--<version>9.4.6.v20170531</version>-->
+            <version>9.4.0.v20161208</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-alpn-server</artifactId>
-            <version>9.4.6.v20170531</version>
-            <!--<version>9.4.0.v20161208</version>-->
+            <!--<version>9.4.6.v20170531</version>-->
+            <version>9.4.0.v20161208</version>
         </dependency>
         <dependency>
             <groupId>org.mortbay.jetty.alpn</groupId>
             <artifactId>jetty-alpn-agent</artifactId>
             <version>2.0.6</version>
         </dependency>
+        <!--UNDERTOW-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-undertow</artifactId>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
@@ -191,13 +198,13 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
-                <configuration>
-                    <argLine>-javaagent:${jetty.alpnAgent.path}</argLine>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<artifactId>maven-surefire-plugin</artifactId>-->
+                <!--<version>2.19.1</version>-->
+                <!--<configuration>-->
+                    <!--<argLine>-javaagent:${jetty.alpnAgent.path}</argLine>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 </project>

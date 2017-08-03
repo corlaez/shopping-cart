@@ -1,5 +1,8 @@
 package com.cesarmando.website.config;
 
+import com.cesarmando.website.util.AndProfileCondition;
+import com.cesarmando.website.util.TomcatProfileCondition;
+//import io.undertow.UndertowOptions;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.coyote.http2.Http2Protocol;
@@ -11,8 +14,10 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
@@ -33,12 +38,13 @@ public class ServerConfig {
 
     private String defaultProtocol = TomcatEmbeddedServletContainerFactory.DEFAULT_PROTOCOL;
 
-    @Bean
-    @Profile("tomcat")//COULD NOT HTTP2
+    @Bean//COULD NOT HTTP2
+    @Conditional(TomcatProfileCondition.class)
+    //https://github.com/otrosien/demo-http2
     // The upgrade handler [org.apache.coyote.http2.Http2Protocol] for [h2]
     // only supports upgrade via ALPN but has been configured for the ["https-jsse-nio-8443"]
     // connector that does not support ALPN.
-    public EmbeddedServletContainerFactory servletContainer() {
+    public EmbeddedServletContainerFactory tomcat() {
         TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
             @Override
             protected void postProcessContext(Context context) {
@@ -68,16 +74,28 @@ public class ServerConfig {
     }
 
     @Bean
+    @Profile({"jetty"})
+    @Conditional(AndProfileCondition.class)
     public EmbeddedServletContainerCustomizer jettyHttp2Customizer(ServerProperties serverProperties) {
+        //https://github.com/bclozel/http2-experiments
         return new JettyHttp2Customizer(serverProperties);
     }
 
-//    @Bean
-//    public FilterRegistrationBean pushCacheFilterRegistration() {
-//        FilterRegistrationBean registration = new FilterRegistrationBean();
-//        registration.setFilter(new PushCacheFilter());
-//        return registration;
-//    }
+    @Bean
+    @Profile("jetty")
+    public FilterRegistrationBean pushCacheFilterRegistration() {
+        //https://github.com/making/demo-http2
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new PushCacheFilter());
+        return registration;
+    }
 
-    //https://stackoverflow.com/questions/33834331/enable-http-2-0-for-undertow-in-spring-boot
+//    @Bean
+//    @Profile("undertow")//HTTP2
+//    UndertowEmbeddedServletContainerFactory undertow() {
+//        UndertowEmbeddedServletContainerFactory factory = new UndertowEmbeddedServletContainerFactory();
+//        factory.addBuilderCustomizers(//needs dependency
+//                builder -> builder.setServerOption(UndertowOptions.ENABLE_HTTP2, true));
+//        return factory;
+//    }
 }

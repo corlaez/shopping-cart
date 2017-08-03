@@ -38,13 +38,12 @@ self.addEventListener('fetch', function(event) {
     //fix update on fetch. optimal. DONE AND TESTED =D
     event.respondWith(
         fetch(event.request)
-            .catch(function() {
-                console.log('No network. Use cache!');
-                return caches.match(event.request)
             .then(function(response) {
                 // If it's error, return
                 if(!response || response.status !== 200 || response.type !== 'basic') {
-                    return response;
+                    return caches.match(event.request).then(function(cachedResponse) {
+                          return cachedResponse || response;
+                    });
                 }
                 // Clone the response stream 1 to cache other to browser
                 var responseToCache = response.clone();
@@ -54,7 +53,10 @@ self.addEventListener('fetch', function(event) {
                     });
                 console.log('cache updated, response delivered');
                 return response;
-            });
+            })
+            .catch(function() {
+                console.log('No network. Use cache!');
+                return caches.match(event.request);
         })
     );
 });

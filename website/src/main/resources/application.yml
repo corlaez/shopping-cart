@@ -2,7 +2,7 @@
 #spring.profiles.active: test
 #security.require-ssl: true
 
-custom.httpToHttps: false
+custom.httpToHttps: true
 
 logging:
   level:
@@ -56,7 +56,7 @@ spring:
 
 #"-Dclassworlds.conf=C:\Program Files (x86)\JetBrains\IntelliJ IDEA 2017.1\plugins\maven\lib\maven3\bin\m2.conf"
 #"-javaagent:C:\Program Files (x86)\JetBrains\IntelliJ IDEA 2017.1\lib\idea_rt.jar=56474:
-C:\Program Files (x86)\JetBrains\IntelliJ IDEA 2017.1\bin"
+#C:\Program Files (x86)\JetBrains\IntelliJ IDEA 2017.1\bin"
 #-Dfile.encoding=UTF-8 -classpath "C:\Program Files (x86)\JetBrains\IntelliJ IDEA 2017.1\plugins\maven\lib\maven3\boot\plexus-classworlds-2.5.2.jar" org.codehaus.classworlds.Launcher -Didea.version=2017.1.5 deploy
 #[INFO] Scanning for projects...
 #[INFO]

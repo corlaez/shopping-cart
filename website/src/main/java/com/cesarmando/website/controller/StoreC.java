@@ -26,6 +26,7 @@ import java.util.List;
 @Slf4j
 @Controller
 public class StoreC {
+    //https://github.com/bclozel/http2-experiments/blob/master/src/main/java/http2xp/web/ApiController.java
 
     @Autowired
     ProductDao productDao;

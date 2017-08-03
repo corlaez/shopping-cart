@@ -41,7 +41,7 @@ public class MyApp {
         SpringApplication sa = new SpringApplication(MyApp.class);
         sa.setBannerMode(Banner.Mode.OFF);
         sa.run(args);
-    }
+    }//https://www.mkyong.com/spring/spring-profiles-example/
 
     @Bean
     @Profile("postgre")
